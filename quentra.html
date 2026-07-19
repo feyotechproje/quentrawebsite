@@ -635,6 +635,8 @@ section{padding:96px 0;scroll-margin-top:84px}
 .faq-a th,.faq-a td{border:1px solid var(--paper-edge);padding:7px 10px;text-align:left;vertical-align:top}
 .faq-a th{background:var(--paper-2);font-weight:700}
 .faq-a b{color:var(--ink)}
+.faq-a blockquote{margin:0 0 10px;padding:10px 16px;border-left:3px solid var(--quentra);background:var(--paper-2);font-style:italic;color:var(--ink)}
+.faq-a .grp{margin:12px 0 6px;font-weight:800;color:var(--ink);font-size:13px;letter-spacing:.02em}
 
 /* ============ CTA ============ */
 .seigaiha{
@@ -1348,101 +1350,91 @@ sc query Quentra    <span class="cm">:: durum sorgula</span></div>
     </div>
 
     <div class="faq">
-      <p class="faq-cat">Genel</p>
       <details open>
         <summary>Quentra nedir?</summary>
-        <div class="faq-a"><p>Quentra, uygulamanız ile SQL Server arasında çalışan bir <b>gateway</b>'dir. TDS protokolünü konuşur — yani uygulama bağlantı string'inde sunucu adı olarak Quentra'yı görür ama gerçekte sorgu Quentra üzerinden gerçek SQL Server'a iletilir. Bu sayede:</p><ul><li>Her sorguyu görür (kim, ne zaman, hangi tabloyu sorguladı, kaç satır döndü)</li><li>Tanımladığınız kurallara göre sorguları <b>engeller</b>, <b>yeniden yazar</b> veya <b>önbelleğe alır</b></li><li>AI ile anomali tespiti yapar</li><li>Tüm bunları <b>SQL Server'a hiç dokunmadan</b> yapar (agent yok, trigger yok)</li></ul></div>
+        <div class="faq-a"><p>Quentra, uygulamalar ile SQL Server arasında çalışan, yapay zekâ destekli akıllı bir <b>Database AI Gateway</b>'dir. SQL trafiğini gerçek zamanlı olarak analiz eder, optimize eder, korur ve izler.</p>
+          <p class="grp">Performans</p>
+          <ul><li>AI Query Rewrite (sorgu yeniden yazımı)</li><li>Smart Caching (akıllı önbellek)</li><li>AI Index Advisor (indeks önerici)</li><li>Execution Plan Analysis (yürütme planı analizi)</li><li>Stored Procedure Optimizer</li></ul>
+          <p class="grp">Güvenlik</p>
+          <ul><li>Database Firewall (veritabanı güvenlik duvarı)</li><li>SQL Injection Protection</li><li>Brute Force Protection</li><li>Anomaly Detection (anomali tespiti)</li><li>Inline Data Masking (veri maskeleme)</li></ul>
+          <p class="grp">Yönetim &amp; AI</p>
+          <ul><li>Observability &amp; Monitoring (gözlemlenebilirlik ve izleme)</li><li>Database Auditing (denetim)</li><li>AI DBA Assistant</li><li>AI Reporting &amp; Analytics</li><li>Application Analysis, Performance Dashboard, Alert Management, SQL Traffic Analytics</li></ul>
+        </div>
       </details>
       <details>
-        <summary>Quentra hangi SQL Server sürümleriyle çalışır?</summary>
-        <div class="faq-a"><p>SQL Server 2012 ve üstü tüm sürümler. Express, Standard, Enterprise — hepsi. Azure SQL Database ile de uyumludur ama Managed Instance senaryoları test edilmiş değildir.</p></div>
+        <summary>Quentra bir proxy midir?</summary>
+        <div class="faq-a"><p><b>Hayır.</b> Quentra yalnızca bağlantıyı ileten klasik bir proxy değildir. SQL Server protokolünü, yani <b>TDS</b>'yi anlayan; sorguları analiz edip değiştirebilen, güvenlik politikaları uygulayabilen ve AI destekli kararlar alabilen akıllı bir <b>Database AI Gateway</b>'dir.</p></div>
       </details>
       <details>
-        <summary>Quentra performansı düşürür mü?</summary>
-        <div class="faq-a"><p>Hayır, kayda değer ölçüde değil. Quentra TDS paketlerini stream eder — yani sorguyu <b>biriktirip</b> SQL'e göndermez, anında forward eder. Eklenen gecikme tipik olarak <b>1-3 milisaniye</b>'dir (network round-trip içinde kaybolur). Sadece <b>rewrite kuralı eşleşmesi</b> sırasında pattern matching birkaç mikrosaniye ek yük getirir.</p></div>
+        <summary>Quentra nerede çalışır?</summary>
+        <div class="faq-a"><p>Quentra, sizin sunucunuz neredeyse orada çalışır. İsterseniz SQL Server ile aynı sunucuda, isterseniz aynı ağdaki başka bir sunucuda konumlandırabilirsiniz. Bulutta veya kontrolünüz dışındaki uzak bir ortamda değil, doğrudan kendi altyapınızda çalışır.</p></div>
       </details>
       <details>
-        <summary>Quentra'yı kapatırsam ne olur?</summary>
-        <div class="faq-a"><p>Quentra'yı durdurursanız uygulamanız SQL Server'a <b>bağlanamaz</b> (çünkü bağlantı string'i Quentra'ya işaret eder). Uygulamayı eski yapısına döndürmek için bağlantı string'lerinde sunucu adını <b>gerçek SQL Server'a</b> geri çevirin.</p></div>
+        <summary>Quentra'yı kurmak için uygulamamda neyi değiştirmeliyim?</summary>
+        <div class="faq-a"><p>Uygulamanızın kaynak kodunda herhangi bir değişiklik yapmanız gerekmez. Yalnızca <b>connection string</b>, yani bağlantı dizesi üzerindeki sunucu ve port bilgisini değiştirmeniz yeterlidir.</p><p>Quentra, veritabanı sunucusuyla aynı sunucuda çalışıyorsa bağlantı adresini şöyle kullanabilirsiniz:</p><pre><code>&lt;ip&gt;,14330</code></pre><p>Başka bir ifadeyle, standart SQL Server portu yerine Quentra'nın dinlediği portu belirtmeniz yeterlidir.</p></div>
       </details>
       <details>
-        <summary>Quentra'nın topladığı veriler nerede saklanır?</summary>
-        <div class="faq-a"><p>Tüm sorgu logları, kurallar, anomali olayları <b>DuckDB</b> isimli yerleşik embedded veritabanında saklanır (<code>starter/quentra.duckdb</code>). Bu tek dosya hem hızlı analitik sorgular için optimize hem de portatif. SQL Server'a hiçbir veri yazılmaz.</p></div>
+        <summary>Quentra, SQL cümlelerini performans için yeniden mi yazıyor?</summary>
+        <div class="faq-a"><p>Evet. Quentra'nın özelliklerinden biri, SQL cümlelerini yeniden yazabilme ve optimize edebilme yeteneğidir. Bu özellik özellikle kaynak koduna erişemediğiniz veya değiştiremeyeceğiniz eski (legacy) uygulamalarda avantaj sağlar.</p><p>Optimize edilmemiş SQL cümleleri, çalıştıkları sırada yeniden düzenlenerek optimize edilmiş hâlleriyle SQL Server'a gönderilebilir. Sorgunun ve verinin yapısına bağlı olarak bu işlem, binlerce kata kadar performans artışı sağlayabilir.</p></div>
+      </details>
+      <details>
+        <summary>Quentra AI, SQL cümlelerini yanlış bir şekilde değiştirirse ne olur?</summary>
+        <div class="faq-a"><p>Quentra, SQL sorgularını belirli sorgu kalıpları, yani <b>pattern</b>'ler üzerinden takip eder. Optimize edilmemiş bir pattern tespit edildiğinde yeni optimizasyon önerileri üretir. Ancak öneri doğrudan canlı sisteme uygulanmaz.</p><p>Siz öneriyi onayladığınızda, onayınız doğrultusunda gelişmiş bir <b>regex kuralı</b> oluşturulur ve bundan sonraki eşleşen sorgular bu kurala göre işlenir. Bu mekanizma, bir yazılımcıya:</p><blockquote>"Bu SQL cümlesini daha optimize bir şekilde yaz."</blockquote><p>dedikten sonra, yazılımcının hazırladığı sorguyu size onaylatıp canlıya almasına benzer.</p></div>
+      </details>
+      <details>
+        <summary>AI, SQL cümlelerini her seferinde kontrol ediyor mu? Gecikme olmuyor mu?</summary>
+        <div class="faq-a"><p>Quentra'da SQL cümleleri pattern, yani sorgu kalıbı olarak takip edilir. Bir sorgu, farklı parametrelerle gün içerisinde binlerce kez çalışsa bile Quentra açısından tek bir pattern olarak değerlendirilir.</p><p>AI bu pattern'i bir kez analiz eder. Pattern için bir kural oluşturulduktan sonra sonraki sorgularda doğrudan bu kural çalışır. Dolayısıyla AI her sorguda yeniden devreye girmez.</p></div>
+      </details>
+      <details>
+        <summary>Quentra'da cache mekanizması nasıl çalışır?</summary>
+        <div class="faq-a"><p>Örneğin eski bir uygulamanızın, uzun zamandır unutulmuş bir zamanlayıcı nedeniyle değişmeyen bir veriye sürekli sorgu gönderdiğini düşünün. Quentra'da bu sorgu için bir cache kuralı tanımladığınızda sistem, sorguyu her seferinde SQL Server'a göndermek yerine istemciye önbellekteki sonucu döndürür.</p><p>Quentra, önbelleği sizin belirlediğiniz sürelerde otomatik olarak yeniler. Örneğin uygulama aynı sorguyu 10 saniyede bir gönderiyor olabilir; ancak Quentra gerçek sorguyu SQL Server üzerinde saatte bir kez çalıştırıp önbelleği yenileyebilir, aradaki isteklerin tamamına cache üzerinden cevap verebilir.</p></div>
+      </details>
+      <details>
+        <summary>Quentra'nın kurulumu nasıl gerçekleşir?</summary>
+        <div class="faq-a"><p>Quentra'nın kurulumu, WinRAR kurulumu kadar hızlı ve kolaydır. EXE dosyasını indirdikten sonra kurulum ekranlarında ilerleyerek yaklaşık 30 saniye içerisinde kurulumu tamamlayabilirsiniz.</p></div>
+      </details>
+      <details>
+        <summary>Quentra'nın audit log özelliği nasıl çalışır?</summary>
+        <div class="faq-a"><p>Çalışan her sorgu Quentra üzerinden geçtiği için kayıt altına alınabilir. Bu sırada şu bilgiler toplanır:</p><ul><li>Sorgunun kim tarafından çalıştırıldığı</li><li>Ne zaman çalıştırıldığı</li><li>Hangi bilgisayardan geldiği</li><li>Hangi kullanıcı hesabıyla çalıştırıldığı</li><li>Hangi SQL cümlesinin çalıştırıldığı</li><li>Hangi uygulamadan gönderildiği</li><li>Döndürülen satır sayısı (row count)</li><li>Execution plan bilgileri</li></ul><p>Bu işlemler, SQL Server Profiler özelliğinden bağımsız olarak gerçekleştirilir.</p></div>
+      </details>
+      <details>
+        <summary>Quentra SQL Injection saldırılarını önler mi?</summary>
+        <div class="faq-a"><p>Quentra'da 50'ye yakın SQL Injection pattern'i bulunmaktadır. Bu pattern'ler yönetilebilir ve ihtiyaca göre düzenlenebilir. SQL Injection koruması aktif olduğunda sistem, saldırının içeriden veya dışarıdan gelmesine bakmaksızın şüpheli sorguları tespit eder ve yakalar.</p></div>
+      </details>
+      <details>
+        <summary>Quentra'nın içinde hangi yapay zekâ modeli bulunmaktadır?</summary>
+        <div class="faq-a"><p>Quentra, kendi yapay zekâ modeliyle birlikte gelmez. Kullanıcı, kullanmak istediği yapay zekâ modelini veya sağlayıcısını seçebilir. Desteklenen seçenekler:</p><ul><li>Azure</li><li>OpenAI</li><li>Gemini</li><li>Ollama</li><li>Fix Cloud</li></ul><p>Kendi yerel AI ortamınız bulunuyorsa Ollama üzerinden çalışabilirsiniz. Quentra ayrıca yerli yapay zekâ sağlayıcısı <b>Fix Cloud</b> ile de çalışmaktadır.</p></div>
+      </details>
+      <details>
+        <summary>Quentra kullanırsam verilerim dışarı gider mi?</summary>
+        <div class="faq-a"><p><b>Hayır.</b> Quentra, verilerinizden ziyade sorgularınızla ilgilenir. Bu yapı içerisinde verileriniz ne Quentra'nın kendisiyle ne de kullanılan yapay zekâ modelleriyle paylaşılır.</p></div>
+      </details>
+      <details>
+        <summary>Quentra sistemi yavaşlatır mı?</summary>
+        <div class="faq-a"><p>Quentra, Go diliyle geliştirilmiş ve yüksek performans için optimize edilmiş bir uygulamadır. Bir sorguyu yeniden yazmadan doğrudan SQL Server'a iletmesi durumunda dahi sorgu başına oluşturduğu ek gecikme yaklaşık <b>300 mikrosaniyedir</b> — bu, yaklaşık olarak bir milisaniyenin üçte birine karşılık gelir.</p></div>
+      </details>
+      <details>
+        <summary>Quentra brute force saldırılarını engeller mi?</summary>
+        <div class="faq-a"><p><b>Evet.</b> Quentra'da brute force saldırılarına karşı şu mekanizmalar bulunur:</p><ul><li>IP bazlı güvenlik kuralları</li><li>Kara liste</li><li>Beyaz liste</li><li>Saldırı algılama mekanizmaları</li></ul></div>
+      </details>
+      <details>
+        <summary>Quentra hangi SQL Server sürümlerini destekliyor?</summary>
+        <div class="faq-a"><p>Quentra şu SQL Server sürümlerini destekler: 2012, 2014, 2016, 2017, 2019, 2022 ve 2025. Ayrıca tüm edition'larda çalışır:</p><ul><li>Express</li><li>Standard</li><li>Developer</li><li>Enterprise</li></ul></div>
+      </details>
+      <details>
+        <summary>Quentra, Logo ve Netsis gibi uygulamalarda çalışır mı?</summary>
+        <div class="faq-a"><p>Quentra, SQL Server'a bağlanan tüm uygulamalarla çalışabilir. Bugüne kadar şu uygulamalarda kullanılmış veya çalıştırılmıştır:</p><ul><li>Logo Tiger</li><li>Netsis</li><li>Workcube</li><li>Özel geliştirilmiş birçok custom uygulama</li></ul></div>
+      </details>
+      <details>
+        <summary>Quentra yerli bir ürün mü?</summary>
+        <div class="faq-a"><p><b>Evet, gururla.</b> Quentra yüzde yüz yerli bir üründür. Microsoft Data Platform MVP'si <b>Ömer Çolakoğlu</b> tarafından, 25 yıllık sektör ve veri platformu deneyimi üzerine geliştirilmiştir.</p></div>
+      </details>
+      <details>
+        <summary>Quentra'nın alternatifleri nelerdir?</summary>
+        <div class="faq-a"><p>Quentra kendi içerisinde 11 farklı özellik barındırmaktadır. Bu özelliklerden bazılarını ayrı ayrı sağlayan ürünler bulunmakla birlikte, özelliklerin tamamını tek bir platform içerisinde sunan küresel bir alternatif bulunmamaktadır.</p></div>
       </details>
 
-      <p class="faq-cat">Kurulum ve İlk Bağlantı</p>
-      <details>
-        <summary>Uygulamamı Quentra'ya nasıl bağlarım?</summary>
-        <div class="faq-a"><p>Uygulamanın bağlantı string'inde:</p><ul><li><b>Server adı</b> → <code>localhost,14330</code> (Quentra'nın proxy port'u)</li><li><b>Database, kullanıcı adı, şifre</b> → değişmeden kalır</li></ul><p>Eski:</p><pre><code>Server=sql-prod;Database=ETRADE;User Id=app;Password=...</code></pre><p>Yeni:</p><pre><code>Server=localhost,14330;Database=ETRADE;User Id=app;Password=...</code></pre></div>
-      </details>
-      <details>
-        <summary>TLS MITM nedir, açmalı mıyım?</summary>
-        <div class="faq-a"><p>Quentra TDS trafiğini <b>TLS şifreli</b> taşır (SQL Server bağlantıları default'ta şifrelidir). TLS MITM açıkken:</p><ul><li>Quentra trafiği <b>decrypt edip</b> sorguyu okur, kurallar çalışır, sonra upstream'e <b>yeniden encrypt edip</b> gönderir</li><li>Sertifikayı runtime üretir (<code>starter/certs/feyogate.pem</code>)</li><li>Uygulama Quentra'nın sertifikasına güvenmeli (genelde <code>TrustServerCertificate=true</code>)</li></ul><p>TLS MITM <b>kapalıyken</b> Quentra sadece şifreli paketleri forward eder — sorgu içeriğini göremez, kural motoru çalışmaz. Üretim ortamında MITM'i <b>açık tutun</b>.</p></div>
-      </details>
-      <details>
-        <summary>SQL Server 2012 ile TLS sorunu yaşıyorum</summary>
-        <div class="faq-a"><p>SQL Server 2012 sadece TLS 1.0 destekler (Schannel kısıtı). Quentra varsayılan olarak TLS 1.2/1.3 dener; uyumsuzluk için <code>config\starter.yaml</code> içinde:</p><pre><code>backend:
-  upstream_min_tls: "1.0"
-  upstream_max_tls: "1.0"</code></pre><p>ekleyin.</p></div>
-      </details>
-
-      <p class="faq-cat">Kural Motoru ve Firewall</p>
-      <details>
-        <summary>Kural ile firewall arasındaki fark nedir?</summary>
-        <div class="faq-a"><ul><li><b>Performans Kuralı</b> (<code>/rules</code>) — sorguyu <b>rewrite eder</b>, <b>advisory log</b>'a düşer veya <b>önbelleğe alır</b>. Trafiği bozmaz; iyileştirir.</li><li><b>Firewall Kuralı</b> (<code>/firewall</code>) — pattern eşleşen sorguyu <b>reddeder</b>, istemciye TDS hatası döner. Yıkıcı/yasaklı komutlar için.</li></ul><p>İkisini ayrı sayfalarda tutmamızın sebebi yetki ayrımı: firewall daha yüksek risk; production'da farklı kişi yetkili olabilir.</p></div>
-      </details>
-      <details>
-        <summary>Kural modları (Auto / Suggest / Observe / Block) ne demek?</summary>
-        <div class="faq-a"><table><tr><th>Mode</th><th>Etki</th><th>Tipik kullanım</th></tr><tr><td><b>Observe</b></td><td>Eşleşirse sadece log'a yazılır, sorgu değişmeden geçer</td><td>Anti-pattern istatistiği toplama</td></tr><tr><td><b>Suggest</b></td><td>Log'a yazılır + UI'da öneri olarak gösterilir, sorgu değişmez</td><td>"Şöyle yaparsanız daha iyi" tavsiyesi</td></tr><tr><td><b>Auto</b></td><td>Eşleşirse sorgu otomatik rewrite edilir (rewrite_to formülüyle)</td><td>Net ve güvenli rewrite kalıpları</td></tr><tr><td><b>Block</b></td><td>Eşleşirse sorgu reddedilir, istemciye hata döner</td><td>Yıkıcı komutlar</td></tr></table></div>
-      </details>
-      <details>
-        <summary>Bir kuralı test etmeden production'a almak güvenli mi?</summary>
-        <div class="faq-a"><p><b>Hayır.</b> Önce <code>status: staged</code> ile kaydedin. Staged kurallar canlı trafiğe <b>uygulanmaz</b> ama eşleşmeleri log'a yazılır. 24-48 saat gözleyin:</p><ul><li>"Bu kural kaç kere eşleşti?" → Audit sayfasında görürsünüz</li><li>"Yanlış yere takıldı mı?" → false-positive varsa pattern'i daraltın</li></ul><p>Emin olunca <code>status: active</code> yapın.</p></div>
-      </details>
-      <details>
-        <summary>Basit SQLi pattern'leri için kural yazmama gerek var mı?</summary>
-        <div class="faq-a"><p><b>Yok.</b> Quentra'da yerleşik <b>SQL Injection Detector</b> var (32 imza, skor tabanlı, varsayılan eşik 70). Bu detector:</p><ul><li><code>' OR 1=1</code></li><li><code>UNION SELECT NULL,NULL,...</code></li><li><code>; DROP TABLE</code></li><li><code>CHAR(0x...)</code> obfuscation</li></ul><p>vb. otomatik yakalar.</p><p>Setup → Güvenlik → "SQL Injection Detection" toggle'ı açıksa korunursunuz. Block kuralı, <b>belirli bir saklı yordamı yasaklamak</b> veya <b>belirli bir tabloya UPDATE atmayı engellemek</b> gibi niş senaryolar için anlamlı.</p></div>
-      </details>
-      <details>
-        <summary>Block kuralı tetiklendiğinde uygulamaya ne döner?</summary>
-        <div class="faq-a"><p>Quentra istemciye <b>TDS Error Token</b> (severity 16) gönderir:</p><pre><code>Quentra: &lt;kural sebebi&gt; (kural: &lt;kural adı&gt;)</code></pre><p>Uygulamanız standart bir SQL hatası gibi yakalar. .NET SqlClient <code>SqlException</code>, JDBC <code>SQLException</code>, vb.</p></div>
-      </details>
-
-      <p class="faq-cat">Yapay Zekâ</p>
-      <details>
-        <summary>AI Asistan'a ne sorabilirim?</summary>
-        <div class="faq-a"><p>Sistemdeki <b>anlık verilere</b> dayalı her şey:</p><ul><li>"Son 1 saatte kaç sorgu çalıştı?"</li><li>"Hangi kullanıcı en yoğun?"</li><li>"Yavaş sorgu var mı?"</li><li>"Kaç açık anomali var?"</li><li>"Hangi anomali kuralları aktif?"</li><li>"Son 24 saatte SQL Server CPU nasıl?"</li><li>"Bir SQL injection denemesi geldi mi?"</li></ul><p>Ayrıca <b>kural önerisi</b>:</p><ul><li>"SELECT * yazanlar için uyarı kuralı öner"</li><li>"DROP komutlarını engelleyen bir kural yaz"</li></ul></div>
-      </details>
-      <details>
-        <summary>AI çağrıları ne kadara mal oluyor?</summary>
-        <div class="faq-a"><p>Sol menüden <b>Sistem → AI Kullanım</b> sayfasına gidin. Burada:</p><ul><li>Toplam çağrı sayısı (24h / 7g / 30g / tüm zaman pencerelerinde)</li><li>Toplam token (prompt + completion ayrımıyla)</li><li><b>Yaklaşık USD maliyet</b> (model fiyatlarından hesaplanır)</li><li>Ortalama gecikme</li><li>Hata sayısı</li><li>Görev (task) başına dağılım: <code>chat</code>, <code>rule_generate</code>, <code>anomaly_ai</code>, <code>sql_monitor</code>, vb.</li></ul></div>
-      </details>
-
-      <p class="faq-cat">Güvenlik ve Yetki</p>
-      <details>
-        <summary>Quentra şifreleri saklıyor mu?</summary>
-        <div class="faq-a"><p><b>SQL Server şifresi:</b> Hayır. Şifre TDS Login7 paketinde gelir ve upstream'e olduğu gibi forward edilir. Quentra şifreyi sadece RAM'de bağlantı süresince tutar; disk'e yazmaz.</p><p><b>Web UI şifresi:</b> Evet — <code>config\starter.yaml</code> içinde <code>api.password</code> <b>plaintext</b> olarak durur. Kurulumda mutlaka güçlü bir şifre seçin ve config dosyasının dosya sistemi izinlerini sıkın.</p></div>
-      </details>
-      <details>
-        <summary>Quentra'nın topladığı veriler GDPR/KVKK uyumlu mu?</summary>
-        <div class="faq-a"><p>DuckDB yerel dosyadadır — verileri dışarıya göndermez (AI çağrıları hariç; onlar da sadece sistem özetlerini yollar, ham SQL Text'i yollamaz). Ancak <code>queries.sql_text</code> alanında <b>WHERE clause'ları, kullanıcı verilerini içerebilir</b>. GDPR/KVKK kapsamındaysanız:</p><ul><li><code>cleanup</code> job'unu agresif yapılandırın (eski sorgu logları silinsin)</li><li>AI provider seçimini düşünün (Azure → veri Avrupa'da kalabilir; Anthropic → ABD)</li><li>Yerel Ollama tercih edin (hiçbir veri dışarı çıkmaz)</li></ul></div>
-      </details>
-
-      <p class="faq-cat">Performans ve Limitler</p>
-      <details>
-        <summary>Quentra ne kadar trafiği kaldırır?</summary>
-        <div class="faq-a"><p>Single instance, ortalama bir sunucuda:</p><ul><li><b>~5000 query/sec</b> (rule motoru kapalı / sade observer)</li><li><b>~2000 query/sec</b> (10 aktif rule, regex matching dahil)</li><li><b>~500 query/sec</b> (TLS MITM + rule motoru + cache lookup)</li></ul><p>Bunlar lab ölçümleri; gerçek dünyada SQL Server'ın kendisi genelde önce darboğaz olur.</p></div>
-      </details>
-      <details>
-        <summary>Birden fazla SQL Server'ı tek Quentra üzerinden geçirebilir miyim?</summary>
-        <div class="faq-a"><p>Henüz <b>hayır</b> — tek backend hedefi var. Router (multi-backend) yapısı geliştirme aşamasında. Şimdilik her SQL Server için ayrı Quentra instance açın.</p></div>
-      </details>
-      <details>
-        <summary>Quentra'yı Linux'ta çalıştırabilir miyim?</summary>
-        <div class="faq-a"><p>Evet — Go binary cross-platform. <code>GOOS=linux go build</code> ile derleyin. Production'da systemd servisi olarak kurun. Windows ile farklılıklar:</p><ul><li>Path separator (<code>\</code> → <code>/</code>)</li><li>MSYS2 UCRT64 gerekmiyor (Linux GCC zaten var)</li><li>Service yönetimi farklı</li></ul></div>
-      </details>
-
-      <p class="faq-foot">Kurulumdan sorun gidermeye 12 kategoride 60'tan fazla sorunun tamamı için: <a href="https://quentra.dev/tr/faq" target="_blank" rel="noopener">quentra.dev/tr/faq</a></p>
+      <p class="faq-foot">Başka sorunuz mu var? <a href="mailto:info@feyonova.com">info@feyonova.com</a> ile iletişime geçin.</p>
     </div>
   </div>
 </section>
