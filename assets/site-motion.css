@@ -1,0 +1,11 @@
+:root{--site-scroll-progress:0%}
+.site-scroll-track{position:fixed;left:0;right:0;top:0;height:2px;z-index:9998;pointer-events:none;background:transparent}
+.site-scroll-track span{display:block;width:var(--site-scroll-progress);height:100%;background:linear-gradient(90deg,#0f9d94,#21c7c1,#7c3aed);box-shadow:0 0 12px rgba(15,157,148,.35);transition:width .08s linear}
+.motion-section{opacity:0;transform:translateY(26px);filter:blur(2px);transition:opacity .7s cubic-bezier(.22,.7,.25,1),transform .7s cubic-bezier(.22,.7,.25,1),filter .7s ease}
+.motion-section.motion-visible{opacity:1;transform:none;filter:none}
+.motion-title{position:relative;transition:transform .28s cubic-bezier(.22,.7,.25,1),color .28s ease,text-shadow .28s ease;will-change:transform}
+.motion-title::after{content:"";position:absolute;left:50%;bottom:-8px;width:44px;height:2px;background:currentColor;opacity:.48;transform:translateX(-50%) scaleX(0);transform-origin:center;transition:transform .28s cubic-bezier(.22,.7,.25,1)}
+.motion-title:hover{transform:translateY(-3px);text-shadow:0 12px 28px rgba(15,157,148,.11)}
+.motion-title:hover::after{transform:translateX(-50%) scaleX(1)}
+.motion-title[data-title-align="left"]::after{left:0;transform:scaleX(0);transform-origin:left}.motion-title[data-title-align="left"]:hover::after{transform:scaleX(1)}
+@media(prefers-reduced-motion:reduce){.site-scroll-track{display:none}.motion-section{opacity:1;transform:none;filter:none;transition:none}.motion-title,.motion-title::after{transition:none}.motion-title:hover{transform:none;text-shadow:none}}

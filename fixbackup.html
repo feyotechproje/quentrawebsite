@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FixBackup | SQL Server Yedekleme Pipeline Platformu</title>
+<meta name="description" content="FixBackup; SQL Server yedeklerini planlayan, doğrulayan, kopyalayan ve saklama politikalarını yöneten yedekleme pipeline platformudur.">
+<link rel="icon" type="image/svg+xml" href="assets/fixbackup-web/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/page-transition.css">
+<link rel="stylesheet" href="assets/site-motion.css">
+<style>
+:root{
+  --paper:#fff;--wash:#f7f6fb;--wash-2:#f0eef8;--ink:#171625;--muted:#626278;
+  --line:#ddd9ea;--purple:#7c3aed;--purple-2:#a78bfa;--purple-pale:#eee7ff;
+  --navy:#11101d;--navy-2:#1b1930;--green:#0f9d94;
+  --display:"Space Grotesk",Inter,system-ui,sans-serif;
+  --text:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",Consolas,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+html,body{overflow-x:clip}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--text);font-size:16px;line-height:1.65}
+img{display:block;max-width:100%;height:auto}a{color:inherit;text-decoration:none}button{font:inherit}
+h1,h2,h3,h4,p{margin:0}h1,h2,h3,h4{font-family:var(--display);line-height:1.08;letter-spacing:-.025em}
+h2{font-size:clamp(32px,4vw,54px)}h3{font-size:clamp(21px,2vw,28px)}
+::selection{background:var(--purple);color:#fff}
+.container{width:min(1180px,calc(100% - 44px));margin-inline:auto}.wide{width:min(1440px,calc(100% - 44px));margin-inline:auto}
+section{padding:96px 0;scroll-margin-top:82px}
+.mono{font-family:var(--mono)}.purple{color:var(--purple)}
+.section-kicker{display:inline-grid;grid-template-columns:auto 1fr;align-items:center;gap:12px;margin-bottom:22px;padding:11px 28px 11px 15px;background:var(--navy);color:#fff;border-left:4px solid var(--purple);clip-path:polygon(0 0,calc(100% - 12px) 0,100% 12px,100% 100%,12px 100%,0 calc(100% - 12px));font:600 12px/1 var(--mono);letter-spacing:.15em;text-transform:uppercase}
+.section-kicker b{color:var(--purple-2);padding-right:12px;border-right:1px solid #4b4566}
+.section-intro{max-width:760px;color:var(--muted);font-size:17px;margin-top:18px}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:50px;padding:0 24px;border:1px solid var(--line);border-radius:6px;background:#fff;color:var(--ink);font-weight:750;transition:.18s ease}
+.btn:hover{transform:translateY(-1px);border-color:var(--purple)}.btn-primary{background:var(--purple);border-color:var(--purple);color:#fff}.btn-primary:hover{background:#6d28d9}
+
+header{position:sticky;top:0;z-index:40;height:82px;background:rgba(255,255,255,.94);border-bottom:1px solid var(--line);backdrop-filter:blur(14px)}
+.nav{height:100%;display:flex;align-items:center;justify-content:space-between;gap:30px}
+.brand-pair{display:flex;align-items:center;gap:18px;min-width:330px}.feyo-logo{width:176px}.brand-rule{height:34px;width:1px;background:var(--line)}.fix-logo{width:145px}
+.nav-links{display:flex;align-items:center;gap:29px;font-size:14px;font-weight:700;color:#424157}.nav-links a:hover{color:var(--purple)}
+.nav-cta{min-height:44px;padding-inline:19px;background:var(--navy);border-color:var(--navy);color:#fff}.menu-toggle{display:none;width:44px;height:44px;border:1px solid var(--line);background:#fff;border-radius:5px;font-size:20px}
+
+.hero{min-height:calc(100vh - 82px);padding:72px 0 80px;background:linear-gradient(120deg,#fff 0%,#fff 42%,#f4f0ff 100%);display:grid;align-items:center;border-bottom:1px solid var(--line)}
+.hero-grid{display:grid;grid-template-columns:minmax(0,.78fr) minmax(580px,1.22fr);align-items:center;gap:64px}
+.hero-logo{width:min(370px,80%);margin-bottom:34px}
+.hero h1{font-size:clamp(38px,4.25vw,66px);max-width:680px}.hero h1 span{display:block;color:var(--purple)}
+.hero-copy>p{max-width:620px;margin-top:24px;color:var(--muted);font-size:clamp(16px,1.25vw,19px)}
+.hero-actions{display:flex;gap:12px;margin-top:32px}.hero-note{display:flex;gap:18px;margin-top:32px;padding-top:24px;border-top:1px solid var(--line);font:600 12px/1.5 var(--mono);letter-spacing:.06em;color:#55536b;text-transform:uppercase}.hero-note span+span{padding-left:18px;border-left:1px solid var(--line)}
+.hero-screen{position:relative;padding:18px 0 18px 18px}.hero-screen::before{content:"";position:absolute;inset:0 0 0 6%;background:var(--purple-pale);clip-path:polygon(5% 0,100% 0,100% 94%,94% 100%,0 100%,0 5%)}
+.screen-frame{position:relative;background:#fff;border:1px solid #cec8df;padding:9px;box-shadow:0 26px 65px rgba(52,35,96,.18)}
+.screen-frame img{width:100%}.screen-cap{display:flex;justify-content:space-between;gap:20px;padding:12px 5px 1px;color:#67627a;font:500 11px/1.4 var(--mono);letter-spacing:.05em;text-transform:uppercase}
+
+.risk{background:#fff}.risk-head{display:grid;grid-template-columns:.8fr 1.2fr;gap:90px;align-items:end;margin-bottom:50px}.risk-head h2{max-width:560px}.risk-head p{color:var(--muted);font-size:17px;max-width:660px}
+.risk-grid{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--ink);border-bottom:1px solid var(--line)}
+.risk-item{padding:30px 32px 34px 0}.risk-item+.risk-item{padding-left:32px;border-left:1px solid var(--line)}.risk-no{font:600 12px var(--mono);color:var(--purple);letter-spacing:.12em}.risk-item h3{margin:16px 0 10px}.risk-item p{color:var(--muted)}
+
+.flow{background:var(--wash)}.flow-head{text-align:center;max-width:860px;margin:0 auto 52px}.flow-head .section-intro{margin-inline:auto}
+.pipeline{display:grid;grid-template-columns:repeat(5,1fr);position:relative;border:1px solid var(--line);background:#fff}
+.pipeline::before{content:"";position:absolute;left:10%;right:10%;top:50px;height:2px;background:linear-gradient(90deg,#477cff,var(--purple),#ef8a00)}
+.pipe-step{position:relative;min-height:210px;padding:30px 24px 24px;border-right:1px solid var(--line)}.pipe-step:last-child{border-right:0}.pipe-index{position:relative;z-index:1;display:grid;place-items:center;width:42px;height:42px;background:var(--navy);color:#fff;font:600 12px var(--mono);box-shadow:0 0 0 8px #fff}.pipe-step h3{font-size:21px;margin:34px 0 8px}.pipe-step p{color:var(--muted);font-size:14px}
+.flow-statement{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:25px;margin-top:30px;font-family:var(--mono);font-size:13px;color:#5d5971}.flow-statement::before,.flow-statement::after{content:"";height:1px;background:var(--line)}
+
+.rule321{padding:72px 0;background:var(--navy);color:#fff}.rule-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:100px;align-items:center}.rule-number{font:700 clamp(88px,13vw,180px)/.8 var(--display);letter-spacing:-.08em;color:var(--purple-2)}.rule-copy h2{max-width:720px}.rule-copy p{max-width:700px;margin-top:20px;color:#bbb7cb;font-size:17px}.rule-facts{display:flex;gap:28px;margin-top:28px;padding-top:24px;border-top:1px solid #38354a}.rule-facts span{font:600 12px var(--mono);letter-spacing:.08em;text-transform:uppercase}.rule-facts b{color:var(--purple-2)}
+
+.build{background:#fff}.build-head{max-width:900px;margin-bottom:64px}.build-list{display:grid;gap:92px}.build-row{display:grid;grid-template-columns:.9fr 1.3fr;align-items:center;gap:70px}.build-row:nth-child(even){grid-template-columns:1.3fr .9fr}.build-row:nth-child(even) .build-copy{order:2}.build-copy .eyebrow{font:600 12px var(--mono);letter-spacing:.12em;color:var(--purple);text-transform:uppercase}.build-copy h3{font-size:clamp(28px,3vw,42px);margin:14px 0}.build-copy p{color:var(--muted);font-size:16px}.build-points{list-style:none;padding:0;margin:24px 0 0;border-top:1px solid var(--line)}.build-points li{padding:11px 0;border-bottom:1px solid var(--line);font-size:14px;font-weight:650}.build-points li::before{content:"/";color:var(--purple);font-family:var(--mono);margin-right:10px}.media-frame{border:1px solid #cbc5dc;background:var(--wash);padding:8px;box-shadow:0 18px 45px rgba(38,28,72,.11)}.media-frame img{width:100%}
+
+.screens{background:var(--wash)}.screens-head{display:flex;justify-content:space-between;align-items:end;gap:40px;margin-bottom:46px}.screens-head>div{max-width:720px}.screens-head p{max-width:480px;color:var(--muted)}
+.screen-story{display:grid;grid-template-columns:260px 1fr;border-top:1px solid var(--ink);padding:42px 0 76px;gap:50px}.story-copy{position:sticky;top:120px;align-self:start}.story-copy .mono{font-size:12px;color:var(--purple);letter-spacing:.12em}.story-copy h3{margin:14px 0 12px}.story-copy p{color:var(--muted);font-size:14px}.story-media{border:1px solid #cbc5dc;background:#fff;padding:8px}.story-media img{width:100%}
+.screen-story:last-child{padding-bottom:0}
+
+.infra{background:#fff}.infra-head{display:grid;grid-template-columns:.9fr 1.1fr;gap:80px;align-items:end;margin-bottom:48px}.infra-head p{color:var(--muted);font-size:17px}
+.infra-grid{display:grid;grid-template-columns:repeat(2,1fr);border-top:1px solid var(--ink)}.infra-item{display:grid;grid-template-columns:70px 1fr;gap:22px;padding:26px 30px 28px 0;border-bottom:1px solid var(--line)}.infra-item:nth-child(even){padding-left:30px;border-left:1px solid var(--line)}.infra-id{font:600 13px var(--mono);color:var(--purple)}.infra-item h3{font-size:20px;margin-bottom:8px}.infra-item p{color:var(--muted);font-size:14px}
+
+.closing{padding:82px 0;background:linear-gradient(115deg,#24154b,#11101d);color:#fff}.closing-grid{display:grid;grid-template-columns:1fr auto;gap:50px;align-items:center}.closing h2{max-width:780px}.closing p{max-width:700px;margin-top:16px;color:#c8c3d7}.closing .btn{background:#fff;border-color:#fff;color:var(--ink)}
+footer{padding:50px 0 26px;background:#0d0c16;color:#b9b5c8}.footer-grid{display:flex;align-items:center;justify-content:space-between;gap:30px;padding-bottom:32px;border-bottom:1px solid #302d3d}.footer-brand{display:flex;align-items:center;gap:18px}.footer-feyo{width:160px;filter:brightness(0) invert(1)}.footer-rule{width:1px;height:32px;background:#403c50}.footer-fix{width:150px}.footer-links{display:flex;gap:25px;font-size:13px}.footer-links a:hover{color:#fff}.copyright{display:flex;justify-content:space-between;gap:20px;padding-top:22px;font-size:12px}
+
+@media(max-width:1180px){.nav-links{gap:18px}.brand-pair{min-width:280px}.feyo-logo{width:150px}.fix-logo{width:125px}.hero-grid{grid-template-columns:.85fr 1.15fr;gap:36px}.risk-head,.infra-head{gap:50px}.build-row,.build-row:nth-child(even){gap:40px}.rule-grid{gap:55px}}
+@media(max-width:1060px){header{height:auto;min-height:72px}.nav{min-height:72px;flex-wrap:wrap}.menu-toggle{display:block}.nav-cta{display:none}.nav-links{display:none;order:3;width:100%;padding:16px 0 22px;border-top:1px solid var(--line)}.nav-links.open{display:grid;grid-template-columns:repeat(2,1fr)}.brand-pair{min-width:0}.hero{min-height:auto}.hero-grid{grid-template-columns:1fr}.hero-copy{padding:0;width:min(760px,calc(100% - 44px));margin:auto}.hero-screen{width:min(880px,calc(100% - 22px));margin-left:auto}.risk-head,.rule-grid,.infra-head{grid-template-columns:1fr;gap:28px}.build-row,.build-row:nth-child(even){grid-template-columns:1fr;gap:30px}.build-row:nth-child(even) .build-copy{order:0}.pipeline{grid-template-columns:1fr}.pipeline::before{top:44px;bottom:44px;left:50px;right:auto;width:2px;height:auto}.pipe-step{min-height:0;padding:24px 26px 24px 94px;border-right:0;border-bottom:1px solid var(--line)}.pipe-step:last-child{border-bottom:0}.pipe-index{position:absolute;left:29px;top:25px;box-shadow:0 0 0 6px #fff}.pipe-step h3{margin:0 0 4px}.screen-story{grid-template-columns:1fr;gap:24px}.story-copy{position:static}.footer-grid{align-items:flex-start;flex-direction:column}}
+@media(max-width:700px){.container,.wide{width:min(100% - 30px,1180px)}section{padding:70px 0}.brand-pair{gap:11px}.brand-rule{height:28px}.feyo-logo{width:120px}.fix-logo{width:105px}.hero{padding:54px 0 60px}.hero-copy{width:calc(100% - 30px)}.hero h1{font-size:clamp(36px,12vw,48px)}.hero-actions{align-items:stretch;flex-direction:column}.hero-note{flex-direction:column;gap:9px}.hero-note span+span{padding-left:0;border-left:0}.hero-screen{width:calc(100% - 15px);padding-left:0}.screen-frame{padding:5px}.screen-cap{display:none}.risk-grid,.infra-grid{grid-template-columns:1fr}.risk-item,.risk-item+.risk-item{padding:24px 0;border-left:0;border-bottom:1px solid var(--line)}.risk-item:last-child{border-bottom:0}.rule-number{font-size:112px}.rule-facts{flex-direction:column;gap:10px}.build-list{gap:70px}.screens-head{align-items:flex-start;flex-direction:column}.screen-story{padding-bottom:58px}.infra-item,.infra-item:nth-child(even){grid-template-columns:48px 1fr;padding:23px 0;border-left:0}.closing-grid{grid-template-columns:1fr}.closing .btn{width:100%}.footer-brand{flex-wrap:wrap}.footer-links{flex-wrap:wrap}.copyright{flex-direction:column}.nav-links.open{grid-template-columns:1fr}.section-kicker{font-size:10px}}
+</style>
+</head>
+<body>
+<div class="page-transition" aria-hidden="true">
+  <div class="pt-mark">
+    <div class="pt-word"><span class="pt-letter" style="--i:0">F</span><span class="pt-letter" style="--i:1">E</span><span class="pt-letter" style="--i:2">Y</span><span class="pt-letter" style="--i:3">O</span><span class="pt-letter" style="--i:4">N</span><span class="pt-letter" style="--i:5">O</span><span class="pt-letter" style="--i:6">V</span><span class="pt-letter" style="--i:7">A</span></div>
+    <span class="pt-line"></span>
+    <span class="pt-caption">Enterprise Intelligence</span>
+  </div>
+</div>
+<header>
+  <div class="wide nav">
+    <a class="brand-pair" href="./index.html" aria-label="FeyoNova ana sayfa">
+      <img class="feyo-logo" src="Logolar/FeyoNovaLogo_Small.png" alt="FeyoNova">
+      <span class="brand-rule"></span>
+      <img class="fix-logo" src="assets/fixbackup-web/logo-light.svg" alt="FixBackup">
+    </a>
+    <nav class="nav-links" id="mainNav" aria-label="Ana menü"><a href="#neden">Neden FixBackup?</a><a href="#nasil">Nasıl Çalışır?</a><a href="#pipeline">Pipeline</a><a href="#ekranlar">Ürün Ekranları</a><a href="#altyapi">Altyapı</a></nav>
+    <a class="btn nav-cta" href="mailto:info@feyonova.com?subject=FixBackup%20Hakkında">İletişime Geçin</a>
+    <button class="menu-toggle" type="button" aria-label="Menüyü aç" aria-controls="mainNav" aria-expanded="false">☰</button>
+  </div>
+</header>
+<main>
+  <section class="hero">
+    <div class="wide hero-grid">
+      <div class="hero-copy">
+        <img class="hero-logo" src="assets/fixbackup-web/logo-light.svg" alt="FixBackup — Kur. Planla. Unut.">
+        <h1>SQL Server yedeklerinizi <span>şansa bırakmayın.</span></h1>
+        <p>Yedekleme, doğrulama, kopyalama, saklama ve bildirim adımlarını tek bir pipeline içinde yönetin. Her çalışmanın ne zaman, nerede ve hangi sonuçla tamamlandığını görün.</p>
+        <div class="hero-actions"><a class="btn btn-primary" href="#nasil">Pipeline’ı Keşfedin</a><a class="btn" href="#ekranlar">Ürün Ekranlarını İnceleyin</a></div>
+        <div class="hero-note"><span>SQL Server odaklı</span><span>Merkezi operasyon</span><span>Doğrulanabilir sonuç</span></div>
+      </div>
+      <div class="hero-screen">
+        <figure class="screen-frame"><img src="assets/fixbackup-web/dashboard.png" alt="FixBackup yönetim paneli" width="1913" height="900"><figcaption class="screen-cap"><span>Gerçek ürün ekranı / Dashboard</span><span>Pipeline Engine</span></figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="risk" id="neden"><div class="container">
+    <div class="risk-head"><div><span class="section-kicker"><b>01</b>Yedekleme Gerçeği</span><h2>Yedeğin var olması, <span class="purple">güvende olduğunuz</span> anlamına gelmez.</h2></div><p>İşletim sistemi seviyesinde alınan tek bir günlük kopya; SQL Server’ın işlem ritmini, doğrulama ihtiyacını ve kurtarma hedefini karşılamaz. FixBackup, yedeklemeyi dosya üretmekten çıkarıp izlenebilir bir operasyona dönüştürür.</p></div>
+    <div class="risk-grid">
+      <article class="risk-item"><span class="risk-no">RİSK / 01</span><h3>24 saatlik veri açığı</h3><p>Günde bir kez alınan genel sistem yedeği, son başarılı kopyadan sonraki işlemleri korumaz.</p></article>
+      <article class="risk-item"><span class="risk-no">RİSK / 02</span><h3>Tek yönteme bağımlılık</h3><p>Aynı ortamda ve aynı yöntemle tutulan kopyalar, arıza anında birlikte erişilemez hale gelebilir.</p></article>
+      <article class="risk-item"><span class="risk-no">RİSK / 03</span><h3>Doğrulanmamış kurtarma</h3><p>Checksum ve restore doğrulaması yapılmayan bir dosyanın ihtiyaç anında açılacağı garanti değildir.</p></article>
+    </div>
+  </div></section>
+
+  <section class="flow" id="nasil"><div class="container">
+    <div class="flow-head"><span class="section-kicker"><b>02</b>Çalışma Modeli</span><h2>Bir yedek değil, baştan sona <span class="purple">kontrollü bir akış.</span></h2><p class="section-intro">FixBackup her görevi sıralı, ölçülebilir ve tekrar kullanılabilir bir pipeline adımına dönüştürür.</p></div>
+    <div class="pipeline">
+      <article class="pipe-step"><span class="pipe-index">01</span><h3>Backup</h3><p>Full, differential veya log yedeğini compression, checksum ve verify seçenekleriyle üretir.</p></article>
+      <article class="pipe-step"><span class="pipe-index">02</span><h3>Copy</h3><p>Yedeği dosya sunucusuna, NAS’a ya da tanımlı bulut hedefine aktarır.</p></article>
+      <article class="pipe-step"><span class="pipe-index">03</span><h3>Cleanup</h3><p>Saklama süresini ve korunacak minimum kopya sayısını birlikte uygular.</p></article>
+      <article class="pipe-step"><span class="pipe-index">04</span><h3>Mail</h3><p>Başarı, uyarı veya hata sonucunu ilgili ekiplere gönderir.</p></article>
+      <article class="pipe-step"><span class="pipe-index">05</span><h3>Schedule</h3><p>Akışı belirlenen aralıkta veya saatte otomatik çalıştırır.</p></article>
+    </div>
+    <div class="flow-statement">KURULUMDAN SONUCA TEK OPERASYON ZİNCİRİ</div>
+  </div></section>
+
+  <section class="rule321"><div class="container rule-grid"><div class="rule-number">3·2·1</div><div class="rule-copy"><span class="section-kicker"><b>03</b>Koruma İlkesi</span><h2>Yedek stratejisini tavsiyeden çıkarıp uygulanabilir hale getirin.</h2><p>Üç veri kopyası, iki farklı ortam ve kurum dışında en az bir kopya. FixBackup hedefleri ve saklama kurallarını pipeline’ın parçası yapar.</p><div class="rule-facts"><span><b>3</b> veri kopyası</span><span><b>2</b> farklı ortam</span><span><b>1</b> kurum dışı hedef</span></div></div></div></section>
+
+  <section class="build" id="pipeline"><div class="container">
+    <div class="build-head"><span class="section-kicker"><b>04</b>Pipeline Tasarımı</span><h2>Ekibiniz nasıl çalışıyorsa, pipeline’ı <span class="purple">öyle oluşturun.</span></h2><p class="section-intro">Hazır adımlarla ilerleyin, görsel editörde akışı kurun veya ihtiyacınızı doğal dille tarif edin. Son karar her zaman görünür ve düzenlenebilir bir pipeline’dır.</p></div>
+    <div class="build-list">
+      <article class="build-row"><div class="build-copy"><span class="eyebrow">Yöntem 01 / Sihirbaz</span><h3>Adım adım, kontrollü kurulum</h3><p>Sunucudan yedek tipine, kopya hedefinden saklama politikasına kadar her karar sıralı bir kurulum akışında alınır.</p><ul class="build-points"><li>Genel, Backup, Copy, Cleanup, Mail, Zamanlama ve Özet</li><li>Her adımda açık seçenekler ve doğrulama</li><li>Teknik ekipler için hızlı ve tekrarlanabilir kurulum</li></ul></div><figure class="media-frame"><img src="assets/fixbackup-web/wizard-general.png" alt="FixBackup pipeline sihirbazı" loading="lazy" width="1903" height="904"></figure></article>
+      <article class="build-row"><div class="build-copy"><span class="eyebrow">Yöntem 02 / Görsel Editör</span><h3>Akışı görerek tasarlayın</h3><p>Backup, Copy, Cleanup ve Mail adımlarını çalışma yüzeyine ekleyin; ilişkileri doğrudan görün ve her adımın parametrelerini düzenleyin.</p><ul class="build-points"><li>Sürükle-bırak çalışma alanı</li><li>Adımlar arası açık veri akışı</li><li>Çalıştırma günlüğüyle aynı ekranda kontrol</li></ul></div><figure class="media-frame"><img src="assets/fixbackup-web/editor.png" alt="FixBackup görsel pipeline editörü" loading="lazy" width="1919" height="901"></figure></article>
+      <article class="build-row"><div class="build-copy"><span class="eyebrow">Yöntem 03 / Doğal Dil</span><h3>İhtiyacı yazın, taslağı inceleyin</h3><p>Sunucu, sıklık, hedef ve saklama kuralını günlük dille anlatın. FixBackup uygulanabilir adımları taslak olarak çıkarır; kaydetmeden önce akışı siz onaylarsınız.</p><ul class="build-points"><li>Metinden önerilen pipeline</li><li>Eksik kaynak ve hedef uyarıları</li><li>Editörde açıp ayrıntılı düzenleme</li></ul></div><figure class="media-frame"><img src="assets/fixbackup-web/ai-pipeline.png" alt="Doğal dille FixBackup pipeline oluşturma ekranı" loading="lazy" width="748" height="657"></figure></article>
+    </div>
+  </div></section>
+
+  <section class="screens" id="ekranlar"><div class="wide">
+    <div class="screens-head"><div><span class="section-kicker"><b>05</b>Operasyon Merkezi</span><h2>Her pipeline’ın durumu, sonucu ve geçmişi tek yerde.</h2></div><p>Gösterim amaçlı soyut görseller yerine FixBackup’ın gerçek ürün ekranları: operasyon ekibinin gördüğü bilgi doğrudan burada.</p></div>
+    <article class="screen-story"><div class="story-copy"><span class="mono">EKRAN / 01</span><h3>Dashboard</h3><p>Başarı, hata, uyarı, korunan veritabanı ve saklanan veri miktarını aynı operasyon görünümünde izleyin.</p></div><figure class="story-media"><img src="assets/fixbackup-web/dashboard.png" alt="FixBackup dashboard ekranı" loading="lazy" width="1913" height="900"></figure></article>
+    <article class="screen-story"><div class="story-copy"><span class="mono">EKRAN / 02</span><h3>Pipeline Listesi</h3><p>Tanımlı akışları, çalışma zamanını, son ve sonraki çalışma bilgisini görün; gerektiğinde manuel başlatın.</p></div><figure class="story-media"><img src="assets/fixbackup-web/pipelines.png" alt="FixBackup pipeline listesi" loading="lazy" width="1913" height="912"></figure></article>
+    <article class="screen-story"><div class="story-copy"><span class="mono">EKRAN / 03</span><h3>Çalışma Günlüğü</h3><p>Her veritabanının dosya adı, boyutu, sıkıştırma sonucu ve doğrulama bilgisini zaman damgasıyla inceleyin.</p></div><figure class="story-media"><img src="assets/fixbackup-web/run-log.png" alt="FixBackup çalışma günlüğü" loading="lazy" width="825" height="600"></figure></article>
+  </div></section>
+
+  <section class="infra" id="altyapi"><div class="container">
+    <div class="infra-head"><div><span class="section-kicker"><b>06</b>Altyapı Uyumu</span><h2>Yedekleme için mevcut mimarinizi yeniden kurmayın.</h2></div><p>FixBackup farklı ağ, kimlik ve hedef yapılarını merkezi bir pipeline üzerinden birleştirir; SQL Server servis hesabını veya domain yapısını değiştirmeden çalışacak şekilde tasarlanmıştır.</p></div>
+    <div class="infra-grid">
+      <article class="infra-item"><span class="infra-id">01 /</span><div><h3>Domain bağımsız çalışma</h3><p>SQL Server ile yedek hedefinin aynı Active Directory ortamında bulunması gerekmez.</p></div></article>
+      <article class="infra-item"><span class="infra-id">02 /</span><div><h3>Servis hesabına dokunmaz</h3><p>SQL Server servis hesabını değiştirerek altyapı bağımlılığı oluşturmaz.</p></div></article>
+      <article class="infra-item"><span class="infra-id">03 /</span><div><h3>Hedefler birbirini görmez</h3><p>SQL Server, NAS, File Server ve bulut hedeflerinin birbirine doğrudan erişmesi gerekmez.</p></div></article>
+      <article class="infra-item"><span class="infra-id">04 /</span><div><h3>SQL dışında şifreleme</h3><p>Yedekler SQL Server’dan bağımsız şifrelenebilir ve yalnızca yetkili kullanıcıların erişimine açılabilir.</p></div></article>
+    </div>
+  </div></section>
+
+  <section class="closing"><div class="container closing-grid"><div><h2>Yedekleme operasyonunuzu görünür, ölçülebilir ve tekrar edilebilir hale getirin.</h2><p>FixBackup’ın kurumunuzdaki SQL Server yapısına nasıl uyarlanacağını birlikte değerlendirelim.</p></div><a class="btn" href="mailto:info@feyonova.com?subject=FixBackup%20Demo%20Talebi">FixBackup’ı Görüşelim</a></div></section>
+</main>
+<footer><div class="container"><div class="footer-grid"><div class="footer-brand"><img class="footer-feyo" src="Logolar/FeyoNovaLogo_Small.png" alt="FeyoNova"><span class="footer-rule"></span><img class="footer-fix" src="assets/fixbackup-web/logo-dark.svg" alt="FixBackup"></div><div class="footer-links"><a href="./index.html">FeyoNova</a><a href="./quentra.html">Quentra</a><a href="#nasil">Nasıl Çalışır?</a><a href="mailto:info@feyonova.com">İletişim</a></div></div><div class="copyright"><span>© 2026 FeyoNova. Tüm hakları saklıdır.</span><span>FixBackup · Pipeline Engine</span></div></div></footer>
+<script src="assets/site-motion.js"></script>
+<script src="assets/page-transition.js"></script>
+<script>const toggle=document.querySelector('.menu-toggle');const nav=document.querySelector('.nav-links');toggle?.addEventListener('click',()=>{const open=nav.classList.toggle('open');toggle.setAttribute('aria-expanded',String(open));toggle.textContent=open?'×':'☰'});nav?.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{nav.classList.remove('open');toggle?.setAttribute('aria-expanded','false');if(toggle)toggle.textContent='☰'}));</script>
+</body>
+</html>

@@ -3,12 +3,14 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Quentra — SQL Server için AI Destekli Güvenlik ve Performans Ağ Geçidi | FeyoNova</title>
+<title>Quentra | FeyoNova</title>
 <meta name="description" content="Quentra, uygulama ile SQL Server arasına giren TDS-farkındalıklı bir ağ geçididir: her sorguyu görür, saldırıları engeller, sorguları havada optimize eder. 12 kahraman, tek gateway." />
-<link rel="icon" type="image/png" href="assets/quentra-web/quentra-logo.png" />
+<link rel="icon" type="image/png" sizes="128x118" href="assets/quentra-web/quentra-q.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/page-transition.css">
+<link rel="stylesheet" href="assets/site-motion.css">
 <link rel="preload" as="image" href="assets/quentra-web/hero-01.jpg">
 <style>
 /* ============ TOKENLAR ============ */
@@ -879,6 +881,24 @@ footer a:hover{color:#fff}
     overflow-wrap:anywhere;overflow-x:hidden;padding:14px;
   }
 }
+/* FeyoNova / FixBackup ile ortak teknik bölüm başlığı */
+body main section .eyebrow{
+  position:relative;left:50%;transform:translateX(-50%);
+  display:inline-flex;align-items:center;gap:12px;
+  margin-bottom:clamp(16px,1.8vw,24px);padding:12px 30px 12px 16px;
+  border:0;border-left:4px solid var(--quentra);border-radius:0;
+  background:#171229;color:#fff;
+  clip-path:polygon(0 0,calc(100% - 12px) 0,100% 12px,100% 100%,12px 100%,0 calc(100% - 12px));
+  box-shadow:inset 0 -1px 0 rgba(124,58,237,.42);
+  font-family:var(--mono);font-size:11.5px;font-weight:600;line-height:1;
+  letter-spacing:.15em;text-transform:uppercase;
+}
+body main section .eyebrow::before{
+  content:"";flex:none;width:18px;height:2px;border-radius:0;
+  background:var(--quentra-soft);box-shadow:0 5px 0 rgba(167,139,250,.38);
+}
+.case .eyebrow{background:#211b38;color:#fff}
+@media(max-width:620px){body main section .eyebrow{max-width:calc(100% - 12px);padding:11px 24px 11px 13px;font-size:10px;letter-spacing:.11em}}
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{transition:none !important;animation:none !important}
   html{scroll-behavior:auto}
@@ -886,6 +906,13 @@ footer a:hover{color:#fff}
 </style>
 </head>
 <body>
+<div class="page-transition" aria-hidden="true">
+  <div class="pt-mark">
+    <div class="pt-word"><span class="pt-letter" style="--i:0">F</span><span class="pt-letter" style="--i:1">E</span><span class="pt-letter" style="--i:2">Y</span><span class="pt-letter" style="--i:3">O</span><span class="pt-letter" style="--i:4">N</span><span class="pt-letter" style="--i:5">O</span><span class="pt-letter" style="--i:6">V</span><span class="pt-letter" style="--i:7">A</span></div>
+    <span class="pt-line"></span>
+    <span class="pt-caption">Enterprise Intelligence</span>
+  </div>
+</div>
 
 <!-- muhur kenarlarini puruzlendiren SVG filtresi -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -1856,5 +1883,7 @@ var HEROES=[
   });
 })();
 </script>
+<script src="assets/site-motion.js"></script>
+<script src="assets/page-transition.js"></script>
 </body>
 </html>
