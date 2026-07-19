@@ -1,0 +1,15 @@
+# Heavy source assets — not needed to serve the site (only inputs to the optimize script)
+quentra/
+Afisler/
+secilen/
+
+# Binary / design source files
+*.psd
+*.pptx
+*.pdf
+*.mp4
+*.zip
+
+# Scratch
+pragtice font.txt
+*.tmp
