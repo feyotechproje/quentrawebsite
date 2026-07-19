@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FeyoNova</title>
-<meta name="description" content="FeyoNova; veritabanı operasyonları, yedekleme, kurumsal arama ve iş zekâsı için yapay zekâ destekli yazılım ürünleri geliştirir.">
+<title>FeyoNova — Hayalinizin Hep Bir Adım Ötesinde</title>
+<meta name="description" content="FeyoNova, insanların henüz fark etmediği ihtiyaçları öngören; yapay zekâ ve veri teknolojileriyle pratik, güvenilir ve özgün ürünler geliştiren bir inovasyon şirketidir.">
 <link rel="icon" type="image/png" data-feyonova-favicon>
 <script src="assets/feyonova-favicon.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -93,6 +93,10 @@ section{padding:96px 0;scroll-margin-top:82px}
 .menu a:hover{color:var(--teal-deep);transform:translateY(-1px)}
 .menu a:hover::after{transform:scaleX(1);transform-origin:left}
 .nav>.btn{min-height:44px;padding-inline:20px;font-family:"Manrope",var(--text);font-size:14px}
+.lang-toggle{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:7px;overflow:hidden;background:#fff;font-family:var(--mono);font-size:11.5px;font-weight:700;letter-spacing:.06em}
+.lang-toggle button{padding:9px 13px;border:0;background:transparent;color:var(--ink-2);cursor:pointer;transition:background .18s ease,color .18s ease}
+.lang-toggle button+button{border-left:1px solid var(--line)}
+.lang-toggle button.active{background:var(--teal);color:#fff}
 .mobile-toggle{display:none;width:44px;height:40px;border:1px solid var(--line);border-radius:8px;background:#fff;cursor:pointer;position:relative}
 .mobile-toggle span,.mobile-toggle span::before,.mobile-toggle span::after{content:"";position:absolute;left:9px;right:9px;height:2px;background:var(--ink)}
 .mobile-toggle span{top:50%;margin-top:-1px}.mobile-toggle span::before{top:-7px}.mobile-toggle span::after{top:7px}
@@ -384,22 +388,93 @@ section{padding:96px 0;scroll-margin-top:82px}
 
 /* Ürünler */
 .products{background:#fff}
-.product-layout{display:grid;grid-template-columns:minmax(0,1.16fr) minmax(0,.84fr);gap:22px;align-items:stretch}
-.product-featured{position:relative;overflow:hidden;min-height:470px;padding:clamp(28px,4vw,46px);border:1px solid #d8cdf1;border-radius:12px;background:linear-gradient(145deg,#fff 0%,#f5f1fd 100%);box-shadow:var(--shadow-sm)}
+.product-tabs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-bottom:20px}
+.product-tab{display:flex;align-items:center;gap:14px;padding:16px 18px;border:1px solid var(--line);border-radius:10px;background:#fff;cursor:pointer;text-align:left;font:inherit;color:var(--ink);transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease}
+.product-tab:hover{transform:translateY(-2px);box-shadow:var(--shadow-sm);border-color:#aad9d5}
+.product-tab.active{border-color:var(--teal);box-shadow:0 0 0 3px rgba(15,157,148,.14)}
+.pt-name{display:block;font-family:var(--display);font-weight:700;font-size:16px;line-height:1.2}
+.pt-sub{display:block;margin-top:3px;color:var(--ink-2);font-size:12px;line-height:1.35}
+.product-pane{display:none}
+.product-pane.active{display:block}
+.pane-simple{position:relative;overflow:hidden;min-height:280px;padding:clamp(28px,4vw,46px);border:1px solid var(--line);border-radius:12px;background:linear-gradient(145deg,#fff,#f3fbfa);box-shadow:var(--shadow-sm)}
+.pane-simple h3{font-size:clamp(24px,2.6vw,32px)}
+.pane-simple p{max-width:640px;margin-top:14px;color:var(--ink-2);font-size:15.5px}
+.pane-simple .btn{margin-top:26px}
+.soon-tag{display:inline-flex;margin-bottom:18px;padding:7px 12px;border-radius:5px;background:var(--teal-pale);color:var(--teal-deep);font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase}
+.fb-pane{border-color:#cfe9e7;background:linear-gradient(145deg,#fff 0%,#eefaf9 100%)}
+.fb-pane>*{position:relative;z-index:1}
+.fb-pane h3{font-size:clamp(22px,2.4vw,30px);line-height:1.15}
+.fb-pane .q-story{border-color:#d3ecea;border-left-color:var(--teal)}
+.fb-pane .q-row svg{stroke:var(--teal-deep)}
+.fb-pane .q-story>a{color:var(--teal-deep);border-bottom-color:rgba(8,125,119,.35)}
+.fb-pane .q-story>a:hover{color:var(--navy);border-bottom-color:var(--navy)}
+.fb-pane .feature-list li::before{color:var(--teal-deep)}
+.fb-logo{display:block;width:min(190px,60%);margin:0 0 16px}
+.fb-lead{max-width:52%}
+.fb-img{
+  position:absolute;right:-1%;top:0;width:48%;height:100%;
+  object-fit:contain;object-position:center right;
+  z-index:0;pointer-events:none;mix-blend-mode:multiply;
+  -webkit-mask-image:radial-gradient(ellipse 66% 60% at 50% 50%,#000 58%,transparent 88%);
+  mask-image:radial-gradient(ellipse 66% 60% at 50% 50%,#000 58%,transparent 88%);
+}
+.fb-foot{display:flex;align-items:center;justify-content:space-between;gap:16px 24px;flex-wrap:wrap;margin-top:18px}
+.fb-foot .feature-list{margin:0;max-width:none;flex:1 1 auto}
+.qs-pane{padding:clamp(20px,2.4vw,30px) clamp(24px,3vw,40px);border-color:#f2d7d9;background:linear-gradient(145deg,#fff 0%,#fdf4f4 100%)}
+.qs-pane>*{position:relative;z-index:1}
+.qs-pane h3{font-size:clamp(22px,2.4vw,30px);line-height:1.15}
+.qs-logo{
+  display:block;width:132px;margin:-26px 0 -14px -16px;mix-blend-mode:multiply;
+  -webkit-mask-image:radial-gradient(ellipse 74% 74% at 50% 50%,#000 62%,transparent 92%);
+  mask-image:radial-gradient(ellipse 74% 74% at 50% 50%,#000 62%,transparent 92%);
+}
+.qs-accent{color:#e02b36}
+.qs-pane .q-story{border-color:#f6dedf;border-left-color:#e02b36}
+.qs-pane .q-row svg{stroke:#e02b36}
+.qs-pane .q-story>a{color:#e02b36;border-bottom-color:rgba(224,43,54,.35)}
+.qs-pane .q-story>a:hover{color:#9f1239;border-bottom-color:#9f1239}
+.qs-pane .feature-list li::before{color:#e02b36}
+.qs-pane .fb-lead,.qs-pane .q-story{max-width:44%}
+.qs-pane .fb-lead{margin-top:10px}
+.qs-pane .feature-list{font-size:12.5px;gap:8px 18px;flex:1 1 0;min-width:260px}
+.qs-pane .fb-foot{margin-top:14px}
+.qs-img{position:absolute;right:clamp(16px,2vw,28px);top:50%;transform:translateY(-50%);width:51%;border:1px solid #e8e2ec;border-radius:12px;box-shadow:0 24px 60px rgba(11,34,57,.28);z-index:0}
+.btn-navy{background:var(--navy);border-color:var(--navy);color:#fff}
+.btn-navy:hover{background:#123754;border-color:#123754;color:#fff}
+.qt-pane{position:relative}
+.qt-pane>*{position:relative;z-index:1}
+.qt-pane p{max-width:46%}
+.qt-img{width:44%;border:0}
+.product-featured{position:relative;overflow:hidden;padding:clamp(22px,2.6vw,32px) clamp(24px,3vw,40px);border:1px solid #d8cdf1;border-radius:12px;background:linear-gradient(145deg,#fff 0%,#f5f1fd 100%);box-shadow:var(--shadow-sm)}
 .product-featured::after{content:"Q";position:absolute;right:-18px;bottom:-94px;font-family:var(--display);font-size:300px;font-weight:700;line-height:1;color:rgba(109,40,217,.055);pointer-events:none}
 .product-featured>*{position:relative;z-index:1}
 .product-tag{display:inline-flex;padding:7px 12px;border-radius:5px;background:var(--purple);color:#fff;font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase}
-.product-logo{width:min(260px,70%);margin:34px 0 24px}
-.product-featured h3{font-size:clamp(27px,3vw,38px)}
-.product-featured>p{max-width:610px;margin-top:16px;color:#554e69;font-size:15.5px}
-.feature-list{list-style:none;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px 24px;padding:0;margin:26px 0 32px;color:#332c47;font-size:13.5px;font-weight:600}
+.product-logo{width:min(200px,60%);margin:0 0 14px}
+.product-featured h3{font-size:clamp(22px,2.4vw,30px)}
+.product-featured>p{max-width:58%;margin-top:10px;color:#554e69;font-size:14px}
+.q-story{position:relative;max-width:58%;margin-top:14px;padding:16px 18px 14px;border:1px solid #e6ddf8;border-left:3px solid var(--purple);border-radius:12px;background:rgba(255,255,255,.85);color:#554e69;font-size:12.5px;line-height:1.5}
+.q-row{display:grid;grid-template-columns:22px 1fr;gap:12px;align-items:start}
+.q-row+.q-row{margin-top:9px}
+.q-row svg{width:19px;height:19px;margin-top:1px;stroke:var(--purple);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.q-row b{display:block;color:var(--ink);font-size:13px}
+.q-row span{display:block;margin-top:1px}
+.q-story>a{display:inline-block;margin:11px 0 0 34px;color:var(--purple);font-weight:700;font-size:12.5px;border-bottom:1px solid rgba(109,40,217,.35)}
+.q-story>a:hover{color:#4c1d95;border-bottom-color:#4c1d95}
+.product-featured::before{content:"";position:absolute;right:-8%;top:-12%;width:75%;height:130%;background:radial-gradient(circle at 68% 42%,rgba(109,40,217,.13),transparent 62%);pointer-events:none}
+.q-bender{
+  position:absolute;right:-2%;bottom:0;width:60%;height:100%;
+  object-fit:cover;object-position:center bottom;
+  z-index:0;pointer-events:none;mix-blend-mode:multiply;
+  -webkit-mask-image:radial-gradient(ellipse 62% 70% at 52% 58%,#000 52%,transparent 82%);
+  mask-image:radial-gradient(ellipse 62% 70% at 52% 58%,#000 52%,transparent 82%);
+}
+.q-halo{position:absolute;right:1%;top:-16%;width:min(560px,52%);aspect-ratio:1;border-radius:50%;z-index:0;border:2px solid rgba(109,40,217,.10);background:radial-gradient(circle,rgba(109,40,217,.10),transparent 65%);pointer-events:none}
+.q-halo::before{content:"";position:absolute;inset:44px;border-radius:50%;border:2px dashed rgba(109,40,217,.13)}
+.q-halo::after{content:"";position:absolute;inset:96px;border-radius:50%;border:1px solid rgba(109,40,217,.10)}
+.feature-list{list-style:none;display:flex;flex-wrap:wrap;gap:8px 24px;padding:0;margin:16px 0 18px;max-width:72%;color:#332c47;font-size:13px;font-weight:600}
 .feature-list li::before{content:"✓";color:var(--purple);font-weight:800;margin-right:9px}
-.product-stack{display:grid;gap:16px}
-.product-card{display:grid;grid-template-columns:48px 1fr auto;align-items:center;gap:16px;padding:22px;border:1px solid var(--line);border-radius:10px;background:#fff;transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease}
-.product-card:hover{transform:translateY(-2px);border-color:#aad9d5;box-shadow:var(--shadow-sm)}
-.product-icon{display:grid;place-items:center;width:48px;height:48px;border-radius:12px;background:var(--teal-pale);color:var(--teal-deep);font-family:var(--mono);font-size:11px;font-weight:700}
+.product-icon{display:grid;place-items:center;flex:none;width:48px;height:48px;border-radius:12px;background:var(--teal-pale);color:var(--teal-deep);font-family:var(--mono);font-size:11px;font-weight:700}
 .product-icon img{width:30px;height:30px}.product-icon.questinal{background:#ffe9ea;color:#c5131a}
-.product-card h3{font-size:19px}.product-card p{margin-top:4px;color:var(--ink-2);font-size:12.5px;line-height:1.45}
 .product-link{display:inline-flex;align-items:center;gap:8px;padding:8px 0;color:var(--purple);font-family:var(--mono);font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap;border-bottom:1px solid rgba(109,40,217,.28);transition:color .18s ease,border-color .18s ease,gap .18s ease}
 .product-link:hover{color:#4c1d95;border-bottom-color:#4c1d95;gap:12px}
 
@@ -454,6 +529,17 @@ section{padding:96px 0;scroll-margin-top:82px}
 .agenda .section-head h2,.agenda-card h3{font-family:"Manrope",var(--display);font-weight:800;letter-spacing:-.035em}
 .agenda-card h3{margin-top:34px;font-size:23px;line-height:1.22}.agenda-card p{margin-top:14px;color:var(--ink-2);font-family:"Manrope",var(--text);font-size:13.5px;line-height:1.7}.agenda-card strong{margin-top:auto;padding-top:28px;color:var(--ink);font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase}
 
+/* Kurucumuzun Mesajı */
+.founder{background:linear-gradient(180deg,var(--paper-2),#fff)}
+.founder-grid{display:grid;grid-template-columns:minmax(240px,.6fr) 1.4fr;gap:clamp(36px,5vw,64px);align-items:center}
+.founder-photo img{width:100%;border-radius:16px;box-shadow:var(--shadow)}
+.founder-copy h2{margin-top:16px;font-size:clamp(26px,3vw,40px)}
+.founder-copy p{margin-top:18px;max-width:640px;color:var(--ink-2);font-size:16px}
+.founder-quote{margin:26px 0 0;padding:18px 22px;border-left:4px solid var(--teal);border-radius:0 10px 10px 0;background:var(--teal-pale);font-family:var(--display);font-size:20px;font-weight:600;line-height:1.4;color:var(--navy)}
+.founder-sign{margin-top:28px}
+.founder-sign strong{display:block;font-family:var(--display);font-size:18px}
+.founder-sign span{color:var(--ink-2);font-size:13px}
+
 /* İletişim */
 .cta{padding:72px 0;background:linear-gradient(135deg,#effaf9,#dff6f4);border-top:1px solid #cfe9e7;border-bottom:1px solid #cfe9e7}
 .cta-row{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:32px}
@@ -471,7 +557,7 @@ footer a{display:block;margin:9px 0;color:#b8cbd1;font-size:13px}footer a:hover{
   .hero-grid{grid-template-columns:1fr;min-height:0;padding:70px 0 54px}
   .hero-copy{text-align:center;display:flex;flex-direction:column;align-items:center}
   .orb-wrap{height:330px}.nova-scene{transform:scale(.72);transform-origin:center}
-  .product-layout{grid-template-columns:1fr}.product-featured{min-height:430px}
+  .product-tabs{grid-template-columns:repeat(2,minmax(0,1fr))}
   .tech-layout{grid-template-columns:1fr}.tech-intro{position:static;text-align:center}.tech-intro p{margin-inline:auto}
   .principles{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
@@ -488,10 +574,19 @@ footer a{display:block;margin:9px 0;color:#b8cbd1;font-size:13px}footer a:hover{
   .hero-grid{padding:48px 0 52px}.hero h1{font-size:clamp(38px,11vw,48px);letter-spacing:-.035em}.hero-copy>p{font-size:15.5px;margin:20px 0 26px}
   .hero-actions{width:100%}.hero-actions .btn{flex:1 1 160px}
   .orb-wrap{display:none}
-  .product-featured{min-height:0;padding:26px}.product-logo{margin:28px 0 20px}.feature-list{grid-template-columns:1fr}.product-card{grid-template-columns:44px 1fr}.product-card .status{grid-column:2;justify-self:start}
+  .product-featured{min-height:0;padding:26px}.product-logo{margin:28px 0 20px}
+  .product-featured>p,.q-story,.feature-list{max-width:100%}
+  .q-bender{position:static;display:block;width:88%;height:auto;max-height:none;margin:12px auto 0;object-fit:contain}
+  .q-halo{display:none}
+  .fb-img{position:static;width:94%;height:auto;margin:14px auto 0;display:block}
+  .fb-lead{max-width:100%}
+  .qs-pane .fb-lead,.qs-pane .q-story{max-width:100%}
+  .qs-img{position:static;transform:none;width:100%;margin:14px 0 0}
   .tech-grid{grid-template-columns:1fr}.tech-item{min-height:0}
   .principles{grid-template-columns:1fr}.principle{min-height:0;border-right:0;border-bottom:1px solid rgba(255,255,255,.14)}.principle:last-child{border-bottom:0}.principle .p-num{margin-bottom:28px}
   .agenda-grid{grid-template-columns:1fr}.agenda-card,.agenda-card:nth-child(2){min-height:240px;border-right:0;border-bottom:1px solid #d3e5e4}.agenda-card:last-child{grid-column:auto;border-top:0;border-bottom:0}
+  .founder-grid{grid-template-columns:1fr}
+  .founder-photo{max-width:320px;margin-inline:auto}
   .cta{padding:58px 0}.cta-row{grid-template-columns:1fr;align-items:start}.cta-row .btn{justify-self:start}
   .footer-grid{grid-template-columns:1fr 1fr;gap:34px 24px}.footer-grid>div:first-child{grid-column:1/-1}.footer-grid>div:last-child{grid-column:auto}.copyright{flex-direction:column}
 }
@@ -513,13 +608,18 @@ footer a{display:block;margin:9px 0;color:#b8cbd1;font-size:13px}footer a:hover{
   <div class="container nav">
     <a href="#top" aria-label="FeyoNova ana sayfa"><img src="Logolar/FeyoNovaLogo_Small.png" alt="FeyoNova" class="brand-logo"></a>
     <nav class="menu" id="menu" aria-label="Ana menü">
-      <a href="#urunler">Ürünler</a>
-      <a href="#teknoloji">Teknoloji</a>
-      <a href="#yaklasim">Yaklaşımımız</a>
-      <a href="#gundem">Odak Alanları</a>
-      <a href="#iletisim">İletişim</a>
+      <a href="#urunler" data-i18n="nav.products">Ürünler</a>
+      <a href="#teknoloji" data-i18n="nav.build">Nasıl Üretiyoruz</a>
+      <a href="#yaklasim" data-i18n="nav.approach">Yaklaşımımız</a>
+      <a href="#degerler" data-i18n="nav.values">Değerlerimiz</a>
+      <a href="#gundem" data-i18n="nav.story">Hikâyemiz</a>
+      <a href="#iletisim" data-i18n="nav.contact">İletişim</a>
     </nav>
-    <a class="btn btn-primary" href="mailto:info@feyonova.com">İletişime Geçin</a>
+    <div class="lang-toggle" role="group" aria-label="Dil / Language">
+      <button type="button" data-lang="tr" class="active">TR</button>
+      <button type="button" data-lang="en">EN</button>
+    </div>
+    <a class="btn btn-primary" href="mailto:info@feyonova.com" data-i18n="nav.cta">İletişime Geçin</a>
     <button class="mobile-toggle" type="button" aria-label="Menüyü aç" aria-expanded="false" aria-controls="menu"><span></span></button>
   </div>
 </header>
@@ -532,10 +632,11 @@ footer a{display:block;margin:9px 0;color:#b8cbd1;font-size:13px}footer a:hover{
     <canvas id="hero-canvas" aria-hidden="true"></canvas>
     <div class="container hero-grid">
       <div class="hero-copy">
-        <h1>Kurumsal zekânın <span class="grad">geleceğini</span> inşa ediyoruz.</h1>
-        <p>Veriyi yalnızca görünür kılan değil; koruyan, hızlandıran ve karar gücüne dönüştüren yapay zekâ destekli yazılım ürünleri geliştiriyoruz.</p>
+        <h1 data-i18n="hero.title">Hayalinizin hep <span class="grad">bir adım ötesinde.</span></h1>
+        <p data-i18n="hero.lead">İnsanların bugün yaşadığı, henüz fark etmediği ve gelecekte ihtiyaç duyacağı problemleri öngörüyor; yapay zekâ ve veri teknolojileriyle pratik, güvenilir ve özgün ürünlere dönüştürüyoruz.</p>
         <div class="hero-actions">
-          <a class="btn btn-primary" href="#urunler">Ürünleri Keşfedin</a>
+          <a class="btn btn-primary" href="#urunler" data-i18n="hero.cta1">Ürünlerimizi Keşfedin</a>
+          <a class="btn" href="#gundem" data-i18n="hero.cta2">Neden FeyoNova?</a>
         </div>
       </div>
 
@@ -558,26 +659,139 @@ footer a{display:block;margin:9px 0;color:#b8cbd1;font-size:13px}footer a:hover{
   <section class="products" id="urunler">
     <div class="container">
       <div class="section-head">
-        <span class="section-label"><b>01</b> Ürün Sistemleri</span>
-        <h2>Gerçek sorunlar için<br><span class="grad">odaklanmış ürünler</span></h2>
-        <p>Her ürünümüz, karmaşık bir kurumsal teknoloji problemini sadeleştirmek ve ölçülebilir iş değeri üretmek üzere tasarlanır.</p>
+        <span class="section-label" data-i18n="products.label"><b>01</b> Ürünlerimiz</span>
+        <h2 data-i18n="products.title">Gerçek dünya için doğan<br><span class="grad">özgün ürünler.</span></h2>
+        <p data-i18n="products.lead">Fark yaratan ürünler, görünür problemlerden değil; henüz fark edilmemiş ihtiyaçlardan doğar. FeyoNova, bu ihtiyaçları öngörür, uygulanabilir teknolojiyle hayata geçirir ve insanların vazgeçemeyeceği ürünlere dönüştürür.</p>
       </div>
-      <div class="product-layout">
-        <article class="product-featured">
-          <span class="product-tag">Öne çıkan ürün</span>
+      <div class="product-tabs" role="tablist" aria-label="Ürünler">
+        <button type="button" class="product-tab active" data-product="quentra" role="tab" aria-selected="true"><span class="product-icon"><img src="assets/quentra-web/quentra-q.png" alt=""></span><span><span class="pt-name">Quentra</span><span class="pt-sub" data-i18n="tab.quentra">Veritabanı ağ geçidi</span></span></button>
+        <button type="button" class="product-tab" data-product="fixbackup" role="tab" aria-selected="false"><span class="product-icon"><img src="assets/fixbackup-web/mark.svg" alt=""></span><span><span class="pt-name">FixBackup</span><span class="pt-sub" data-i18n="tab.fixbackup">Yedekleme otomasyonu</span></span></button>
+        <button type="button" class="product-tab" data-product="querisma" role="tab" aria-selected="false"><span class="product-icon">QS</span><span><span class="pt-name">Querisma</span><span class="pt-sub" data-i18n="tab.querisma">Gerçek zamanlı izleme</span></span></button>
+        <button type="button" class="product-tab" data-product="erpai" role="tab" aria-selected="false"><span class="product-icon questinal">QN</span><span><span class="pt-name">Questinal</span><span class="pt-sub" data-i18n="tab.erpai">Veriyle sohbet</span></span></button>
+      </div>
+      <div class="product-detail">
+        <article class="product-featured product-pane active" data-pane="quentra">
           <img class="product-logo" src="assets/quentra-web/quentra-logo.png" alt="Quentra">
-          <h3>Yapay zekâ destekli veritabanı ağ geçidi</h3>
-          <p>SQL Server trafiğini uygulama koduna dokunmadan gözlemler, saldırıları engeller ve yavaş sorguları veritabanına ulaşmadan optimize eder.</p>
+          <h3 data-i18n="q.title">Yeni nesil veritabanı ağ geçidi</h3>
+          <p data-i18n="q.desc">SQL Server trafiğini uygulama koduna dokunmadan gözlemleyen, koruyan, hızlandıran ve yapay zekâ ile yöneten yeni nesil veritabanı ağ geçidi. Kurulumu ise kapsamının aksine birkaç dakika sürer.</p>
+          <div class="q-story">
+            <div class="q-row">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg>
+              <div><b data-i18n="q.s1.t">Sorunu biliyorduk.</b><span data-i18n="q.s1.d">Kötü yazılmış SQL sorguları sistemleri yavaşlatıyor, bazen kilitliyordu.</span></div>
+            </div>
+            <div class="q-row">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-4 10c.8.7 1 1.5 1 2h6c0-.5.2-1.3 1-2a6 6 0 0 0-4-10z"/></svg>
+              <div><b data-i18n="q.s2.t">Çözümü de biliyorduk.</b><span data-i18n="q.s2.d">SQL optimizasyonu.</span></div>
+            </div>
+            <div class="q-row">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="11" width="16" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+              <div><b data-i18n="q.s3.t">Ama uygulamaya dokunamıyorduk.</b></div>
+            </div>
+            <div class="q-row">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 9c3-1.6 7-1.6 10 0 3-1.6 7-1.6 10 0-.6 5.4-3.4 8.4-10 8.4S2.6 14.4 2 9z"/><circle cx="8.5" cy="12.4" r="1.4"/><circle cx="15.5" cy="12.4" r="1.4"/></svg>
+              <div><b data-i18n="q.s4.t">İşte o gün Last SQL Bender’ı hayal ettik.</b><span data-i18n="q.s4.d">Kötü SQL sorgularını havada büken, onları ışık hızında çalıştıran bir süper kahramanı...</span></div>
+            </div>
+            <div class="q-row">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18-3-3-3-15 0-18z"/></svg>
+              <div><b data-i18n="q.s5.t">Sonra o kahramanın görev yapacağı dünyayı inşa ettik.</b><b data-i18n="q.s5.d">Adını Quentra koyduk.</b></div>
+            </div>
+            <div class="q-row">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              <div><b data-i18n="q.s6.t">Hayalimizi büyüttük ve yanına 10 tane daha süper kahraman ekledik.</b></div>
+            </div>
+            <a href="./quentra.html" data-i18n="q.storyLink">Hikâyenin devamı →</a>
+          </div>
           <ul class="feature-list">
-            <li>Anlık SQL görünürlüğü</li><li>Saldırı önleme</li><li>Sorgu optimizasyonu</li><li>Denetim ve uyumluluk</li>
+            <li data-i18n="q.f1">Firewall</li><li data-i18n="q.f2">Denetim</li><li data-i18n="q.f3">Gözlemlenebilirlik</li><li data-i18n="q.f4">Sorgu optimizasyonu</li><li data-i18n="q.f5">AI DBA</li>
           </ul>
-          <a class="btn btn-primary" href="./quentra.html" aria-label="Quentra ürün sayfasını inceleyin">Quentra’yı İnceleyin</a>
+          <a class="btn btn-primary" href="./quentra.html" aria-label="Quentra ürün sayfasını inceleyin" data-i18n="q.cta">Quentra’yı İnceleyin <span aria-hidden="true">→</span></a>
+          <div class="q-halo" aria-hidden="true"></div>
+          <img class="q-bender" src="assets/quentra-web/lastsqlbenderlight.png" alt="Last SQL Bender">
         </article>
-        <div class="product-stack">
-          <article class="product-card"><div class="product-icon"><img src="assets/fixbackup-web/mark.svg" alt=""></div><div><h3>FixBackup</h3><p>SQL Server yedeklerini planlayan, doğrulayan ve hedeflere taşıyan pipeline platformu.</p></div><a class="product-link" href="fixbackup.html" data-direct-navigation aria-label="FixBackup ürün sayfasını aç">Ürün sayfası <span aria-hidden="true">→</span></a></article>
-          <article class="product-card"><div class="product-icon">QS</div><div><h3>Querisma</h3><p>Vektör arama ve yapay zekâ ile kurumsal veriden anlam üretin.</p></div></article>
-          <article class="product-card"><div class="product-icon questinal">QN</div><div><h3>Questinal</h3><p>Logo Tiger ERP verinizle Türkçe konuşun; doğru raporu güvenli biçimde bulun.</p></div><a class="product-link" href="questinal.html" data-direct-navigation aria-label="Questinal ürün sayfasını aç">Ürün sayfası <span aria-hidden="true">→</span></a></article>
-        </div>
+        <article class="pane-simple product-pane fb-pane" data-pane="fixbackup">
+          <img class="fb-logo" src="assets/fixbackup-web/logo-light.svg" alt="FixBackup">
+          <h3 data-i18n="fb.title">Yedek alıyorduk.<br>Ama gerçekten koruyor muyduk?</h3>
+          <p class="fb-lead" data-i18n="fb.lead">SQL Server'ın güçlü yedekleme altyapısını tek bir komutla kolayca yönetmenizi sağlayan güvenli ve akıllı yedekleme otomasyonu.</p>
+          <div class="q-story">
+            <div class="q-row">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5"/><path d="M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg>
+              <div><b data-i18n="fb.s1.t">Sorunu biliyorduk.</b><span data-i18n="fb.s1.d">Yedekler çoğunlukla günde yalnızca bir kez alınıyordu.</span></div>
+            </div>
+            <div class="q-row">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 4 14h6l-1 8 9-12h-6l1-8z"/></svg>
+              <div><b data-i18n="fb.s2.t">Çözümü de biliyorduk.</b><span data-i18n="fb.s2.d">SQL Server'ın Full, Differential ve Transaction Log Backup altyapısı.</span></div>
+            </div>
+            <div class="q-row">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9 7 7M17 17l2.1 2.1M19.1 4.9 17 7M7 17l-2.1 2.1"/></svg>
+              <div><b data-i18n="fb.s3.t">Ama yönetmek zordu.</b><span data-i18n="fb.s3.d">Doğru strateji, otomasyon ve çoklu hedef yönetimi uzmanlık gerektiriyordu.</span></div>
+            </div>
+            <div class="q-row">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="11" width="16" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+              <div><b data-i18n="fb.s4.t">Bir de başka bir sorun vardı.</b><span data-i18n="fb.s4.d">Yedekler çoğu zaman aynı sistemdeydi. Bir saldırı veya fidye yazılımı, hem veriyi hem de yedeği hedef alabiliyordu.</span></div>
+            </div>
+            <div class="q-row">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9L12 3z"/><path d="M19 15l.9 2.1L22 18l-2.1.9L19 21l-.9-2.1L16 18l2.1-.9L19 15z"/></svg>
+              <div><b data-i18n="fb.s5.t">İşte o gün FixBackup'ı geliştirdik.</b><span data-i18n="fb.s5.d">Tek bir komutla kurulan, SQL Server için güvenli ve akıllı yedekleme otomasyonu.</span></div>
+            </div>
+            <div class="q-row">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 16.5c-1.5 1.3-2 5-2 5s3.7-.5 5-2c.7-.8.7-2.1-.1-2.9-.8-.8-2.1-.8-2.9-.1z"/><path d="M12 15l-3-3a22 22 0 0 1 2-4A12.9 12.9 0 0 1 22 2c0 2.7-.8 7.5-6 11a22 22 0 0 1-4 2z"/><path d="M9 12H4s.6-3 2-4c1.6-1.1 5 0 5 0M12 15v5s3-.6 4-2c1.1-1.6 0-5 0-5"/></svg>
+              <div><b data-i18n="fb.s6.t">Sonra veri kaybını değil, veri sürekliliğini yöneten bir platform inşa ettik.</b><b data-i18n="fb.s6.d">Adını FixBackup koyduk.</b></div>
+            </div>
+            <a href="fixbackup.html" data-direct-navigation data-i18n="q.storyLink">Hikâyenin devamı →</a>
+          </div>
+          <div class="fb-foot">
+            <ul class="feature-list">
+              <li>Full Backup</li><li>Differential Backup</li><li>Transaction Log</li><li>Multi Destination</li><li>Backup Verification</li>
+            </ul>
+            <a class="btn btn-primary" href="fixbackup.html" data-direct-navigation aria-label="FixBackup ürün sayfasını aç" data-i18n="fb.cta">FixBackup'ı inceleyin <span aria-hidden="true">→</span></a>
+          </div>
+          <img class="fb-img" src="assets/quentra-web/fixbackup.png" alt="">
+        </article>
+        <article class="pane-simple product-pane qs-pane" data-pane="querisma">
+          <img class="qs-logo" src="Logolar/querismalogo.png" alt="Querisma — SQL Server Monitor">
+          <h3 data-i18n="qs.title">SQL Server'ınızı<br><span class="qs-accent">gerçek zamanlı</span> izleyin</h3>
+          <p class="fb-lead" data-i18n="qs.lead">Performans, sorgular, beklemeler, bloklamalar ve sistem sağlığı... Hepsi tek ekranda, anlık ve detaylı.</p>
+          <div class="q-story">
+            <div class="q-row">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 3v18h18"/><path d="M7 17v-5M12 17V9M17 17V6"/></svg>
+              <div><b data-i18n="qs.s1.t">Her Şeyi Anlık İzleyin.</b><span data-i18n="qs.s1.d">CPU, bellek, disk, TempDB ve I/O metriklerini gerçek zamanlı izleyin.</span></div>
+            </div>
+            <div class="q-row">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+              <div><b data-i18n="qs.s2.t">Beklemeleri ve Darboğazları Bulun.</b><span data-i18n="qs.s2.d">Wait Statistics, blocking zincirleri ve performans sorunlarını anında tespit edin.</span></div>
+            </div>
+            <div class="q-row">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="3" width="13" height="18" rx="2"/><path d="M8 8h5M8 12h3"/><circle cx="15.5" cy="15.5" r="3"/><path d="M18 18l2.5 2.5"/></svg>
+              <div><b data-i18n="qs.s3.t">En Maliyetli Sorguları Keşfedin.</b><span data-i18n="qs.s3.d">CPU, Logical Read ve süreye göre en çok kaynak tüketen sorguları saniyeler içinde bulun.</span></div>
+            </div>
+            <div class="q-row">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="5" rx="1"/><rect x="3" y="16" width="6" height="5" rx="1"/><rect x="15" y="16" width="6" height="5" rx="1"/><path d="M12 8v4M12 12H6v4M12 12h6v4"/></svg>
+              <div><b data-i18n="qs.s4.t">Bloklama &amp; Deadlock Analizi.</b><span data-i18n="qs.s4.d">Bloklama zincirlerini görselleştirin, deadlock'ları analiz edin ve kök sebebe hızla ulaşın.</span></div>
+            </div>
+            <div class="q-row">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 9a6 6 0 1 0-12 0c0 7-3 8-3 8h18s-3-1-3-8"/><path d="M10.3 21a2 2 0 0 0 3.4 0"/></svg>
+              <div><b data-i18n="qs.s5.t">Akıllı Uyarılarla Her Zaman Bir Adım Önde Olun.</b><span data-i18n="qs.s5.d">Kritik durumları kullanıcılar fark etmeden önce görün ve anında müdahale edin.</span></div>
+            </div>
+            <div class="q-row">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 16.5c-1.5 1.3-2 5-2 5s3.7-.5 5-2c.7-.8.7-2.1-.1-2.9-.8-.8-2.1-.8-2.9-.1z"/><path d="M12 15l-3-3a22 22 0 0 1 2-4A12.9 12.9 0 0 1 22 2c0 2.7-.8 7.5-6 11a22 22 0 0 1-4 2z"/><path d="M9 12H4s.6-3 2-4c1.6-1.1 5 0 5 0M12 15v5s3-.6 4-2c1.1-1.6 0-5 0-5"/></svg>
+              <div><b data-i18n="qs.s6.t">Dakikalar İçinde Hazır.</b><span data-i18n="qs.s6.d">Tek çalıştırılabilir dosya. Agent yok, ek veritabanı yok, karmaşık kurulum yok.</span></div>
+            </div>
+            <a href="#iletisim" data-i18n="qs.link">Tüm özellikleri keşfedin →</a>
+          </div>
+          <div class="fb-foot">
+            <ul class="feature-list">
+              <li data-i18n="qs.f1">Canlı İzleme</li><li data-i18n="qs.f2">Bekleme Analizi</li><li data-i18n="qs.f3">En Maliyetli Sorgular</li><li data-i18n="qs.f4">Bloklama Zinciri</li><li data-i18n="qs.f5">Deadlock Analizi</li><li data-i18n="qs.f6">Dosya I/O</li><li data-i18n="qs.f7">Veritabanı Sağlığı</li><li data-i18n="qs.f8">Akıllı Uyarılar</li>
+            </ul>
+            <a class="btn btn-navy" href="#iletisim" data-i18n="qs.cta">Querisma'yı inceleyin <span aria-hidden="true">→</span></a>
+          </div>
+          <img class="qs-img" src="QuerismaScreen/QuerismaCard.png" alt="Querisma gerçek zamanlı izleme ekranı">
+        </article>
+        <article class="pane-simple product-pane qt-pane" data-pane="erpai">
+          <h3>Questinal</h3>
+          <p data-i18n="erpai.desc">Logo Tiger ERP verinizle Türkçe konuşun; doğru raporu güvenli biçimde bulun. Kurumsal ERP verisine doğal dilde soru sormayı ve anında anlaşılır içgörüler üretmeyi mümkün kılar.</p>
+          <a class="btn btn-primary" href="questinal.html" data-direct-navigation aria-label="Questinal ürün sayfasını aç" data-i18n="qt.cta">Questinal'ı inceleyin <span aria-hidden="true">→</span></a>
+          <img class="qs-img qt-img" src="Logolar/questinallogo.png" alt="Questinal — Your Business AI Assistant">
+        </article>
       </div>
     </div>
   </section>
@@ -585,15 +799,16 @@ footer a{display:block;margin:9px 0;color:#b8cbd1;font-size:13px}footer a:hover{
   <section class="technology" id="teknoloji">
     <div class="container tech-layout">
       <div class="tech-intro">
-        <span class="section-label"><b>02</b> Teknoloji Temeli</span>
-        <h2>Geleceği<br><span class="grad">mühendislikle</span> kuruyoruz.</h2>
-        <p>Yapay zekâyı kurumsal veri, güvenlik ve yüksek performanslı sistem mühendisliğiyle bir araya getiriyoruz.</p>
+        <span class="section-label" data-i18n="build.label"><b>02</b> Nasıl Üretiyoruz?</span>
+        <h2 data-i18n="build.title">Teknolojiden önce<br><span class="grad">hayal ve ihtiyaç gelir.</span></h2>
+        <p data-i18n="build.lead">En yeni teknolojiyi kullanmak için ürün geliştirmiyoruz. İhtiyaca en uygun teknolojiyi seçerek güvenilir ve sürdürülebilir ürünler oluşturuyoruz.</p>
       </div>
       <div class="tech-grid">
-        <article class="tech-item"><span class="tech-num">01 / Öğrenen Sistemler</span><h3>Yapay Zekâ ve Makine Öğrenmesi</h3><p>Gerçek operasyon verisinden öğrenen, karar destekleyen ve aksiyon öneren sistemler.</p></article>
-        <article class="tech-item"><span class="tech-num">02 / Veri Altyapısı</span><h3>Kurumsal Veri Teknolojileri</h3><p>SQL, semantik arama ve vektör altyapılarını güvenli bir veri katmanında buluşturuyoruz.</p></article>
-        <article class="tech-item"><span class="tech-num">03 / Güvenlik</span><h3>Güvenlik ve Gizlilik</h3><p>Ürün yaşam döngüsünün tamamına yayılan, tasarımdan başlayan koruma yaklaşımı.</p></article>
-        <article class="tech-item"><span class="tech-num">04 / Ölçek</span><h3>Performans ve Ölçeklenebilirlik</h3><p>Yoğun iş yüklerinde kararlı çalışan, büyümeye hazır kurumsal mimariler.</p></article>
+        <article class="tech-item"><span class="tech-num" data-i18n="build.1.num">01 / Hayal</span><h3 data-i18n="build.1.title">Önce hayal ederiz.</h3><p data-i18n="build.1.desc">Bugünün sınırlarından değil, yarının imkânlarından yola çıkarız.</p></article>
+        <article class="tech-item"><span class="tech-num" data-i18n="build.2.num">02 / İhtiyaç</span><h3 data-i18n="build.2.title">Problemi derinlemesine anlarız.</h3><p data-i18n="build.2.desc">Söylenen ihtiyacın arkasındaki gerçek problemi ve bir sonraki ihtiyacı araştırırız.</p></article>
+        <article class="tech-item"><span class="tech-num" data-i18n="build.3.num">03 / Performans</span><h3 data-i18n="build.3.title">Pratik ve hızlı tasarlarız.</h3><p data-i18n="build.3.desc">Karmaşıklığı kullanıcıya yüklemeden, kısa sürede değer üreten deneyimler geliştiririz.</p></article>
+        <article class="tech-item"><span class="tech-num" data-i18n="build.4.num">04 / Güvenlik</span><h3 data-i18n="build.4.title">Güveni temele koyarız.</h3><p data-i18n="build.4.desc">Verinin müşteriye ait olduğunu bilir, güvenliği ürün yaşam döngüsünün tamamına yayarız.</p></article>
+        <article class="tech-item"><span class="tech-num" data-i18n="build.5.num">05 / Teknoloji</span><h3 data-i18n="build.5.title">En uygun aracı seçeriz.</h3><p data-i18n="build.5.desc">Teknoloji takıntısıyla değil, ürünün başarısı ve sürdürülebilirliği için karar veririz.</p></article>
       </div>
     </div>
   </section>
@@ -602,15 +817,34 @@ footer a{display:block;margin:9px 0;color:#b8cbd1;font-size:13px}footer a:hover{
     <div class="approach-field" aria-hidden="true"><span></span><span></span><span></span></div>
     <div class="container">
       <div class="section-head">
-        <span class="section-label"><b>03</b> Çalışma Yaklaşımı</span>
-        <h2>İnovasyon bir özellik değil,<br><span class="grad">ürünün temelidir.</span></h2>
-        <p>Her ürünü, teknoloji gösterisi yapmak için değil; gerçek bir iş problemini güvenilir biçimde çözmek için geliştiriyoruz.</p>
+        <span class="section-label" data-i18n="feyo.label"><b>03</b> F.E.Y.O. Yaklaşımı</span>
+        <h2 data-i18n="feyo.title">Hayalden etkiye uzanan<br><span class="grad">bir ürün kültürü.</span></h2>
+        <p data-i18n="feyo.lead">FeyoNova adını yalnızca taşımıyoruz. Ürün geliştirme anlayışımızı da bu dört ilke üzerine kuruyoruz.</p>
       </div>
       <div class="principles">
-        <article class="principle"><span class="p-num">01</span><h3>Zekâ Ürünün Çekirdeğinde</h3><p>Karar desteğini sonradan eklenen bir özellik değil, ürün mimarisinin temel parçası olarak kurarız.</p></article>
-        <article class="principle"><span class="p-num">02</span><h3>Kurumsal Standartlarda</h3><p>Güvenilirlik, güvenlik ve ölçek gereksinimlerini tasarımın ilk gününden ele alırız.</p></article>
-        <article class="principle"><span class="p-num">03</span><h3>Ölçülebilir Performans</h3><p>Hız ve kaynak kullanımını somut iş sonuçlarıyla birlikte değerlendiririz.</p></article>
-        <article class="principle"><span class="p-num">04</span><h3>Mevcut Yapıyla Uyumlu</h3><p>Kurulumu sade, işletimi öngörülebilir ve mevcut sistemlere uyumlu ürünler geliştiririz.</p></article>
+        <article class="principle"><span class="p-num">F</span><h3>Foresee</h3><p data-i18n="feyo.f">Başkalarının henüz görmediği ihtiyaçları keşfeder, gelecekte ortaya çıkacak problemleri bugünden öngörürüz.</p></article>
+        <article class="principle"><span class="p-num">E</span><h3>Engineer</h3><p data-i18n="feyo.e">Hayali, sahada çalışan; hızlı, güvenli ve pratik bir teknoloji ürününe dönüştürürüz.</p></article>
+        <article class="principle"><span class="p-num">Y</span><h3>Yield</h3><p data-i18n="feyo.y">Teknoloji gösterisi değil, insanlara ve kurumlara ölçülebilir fayda sağlayan sonuçlar üretiriz.</p></article>
+        <article class="principle"><span class="p-num">O</span><h3>Outperform</h3><p data-i18n="feyo.o">İnsanların ihtiyaç duyduğunu bilmediği ürünleri, alışılmış yöntemlerden daha sade ve etkili biçimde geliştiririz.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="values" id="degerler">
+    <div class="container">
+      <div class="section-head">
+        <span class="section-label" data-i18n="values.label"><b>04</b> Değerlerimiz</span>
+        <h2 data-i18n="values.title">İyi bir ürün yalnızca<br><span class="grad">iyi teknoloji değildir.</span></h2>
+      </div>
+      <div class="tech-grid values-grid">
+        <article class="tech-item"><h3 data-i18n="values.1.t">Güven</h3><p data-i18n="values.1.d">Şeffaf, güvenli ve sorumluluk sahibi ürünler geliştiririz. Veri her zaman müşterinindir.</p></article>
+        <article class="tech-item"><h3 data-i18n="values.2.t">Empati</h3><p data-i18n="values.2.d">Ürünü kullanan insanın zamanını, bütçesini ve mevcut altyapısını önemseriz.</p></article>
+        <article class="tech-item"><h3 data-i18n="values.3.t">Pratiklik</h3><p data-i18n="values.3.d">Karmaşık bir yeteneğin kullanımını karmaşıklaştırmayız. Güçlü ürünler sade olmalıdır.</p></article>
+        <article class="tech-item"><h3 data-i18n="values.4.t">Ulaşılabilirlik</h3><p data-i18n="values.4.d">Yapay zekâ ve ileri teknolojilerin yalnızca büyük kurumlara ait olması gerektiğine inanmıyoruz.</p></article>
+        <article class="tech-item"><h3 data-i18n="values.5.t">Uyumluluk</h3><p data-i18n="values.5.d">Yeni bir ürünün müşteriye gereksiz donanım veya sürüm maliyeti çıkarmamasını önemseriz.</p></article>
+        <article class="tech-item"><h3 data-i18n="values.6.t">Çeviklik</h3><p data-i18n="values.6.d">İhtiyaçlar değiştiğinde hızla uyum sağlar, doğru yöne hareket etmekten çekinmeyiz.</p></article>
+        <article class="tech-item"><h3 data-i18n="values.7.t">Özgünlük</h3><p data-i18n="values.7.d">Mevcut ürünlerin küçük kopyalarını değil, ezber bozan ve yeni kategori oluşturabilecek çözümler üretiriz.</p></article>
+        <article class="tech-item"><h3 data-i18n="values.8.t">Büyük Düşünmek</h3><p data-i18n="values.8.d">Türkiye'den doğan, dünyanın her yerinde kullanılan ürünler geliştirmeyi hedefleriz.</p></article>
       </div>
     </div>
   </section>
@@ -618,21 +852,36 @@ footer a{display:block;margin:9px 0;color:#b8cbd1;font-size:13px}footer a:hover{
   <section class="agenda" id="gundem">
     <div class="container">
       <div class="section-head">
-        <span class="section-label"><b>04</b> Araştırma Gündemi</span>
-        <h2>Bugünün verisinden<br><span class="grad">yarının zekâsına</span></h2>
-        <p>Ürünlerimizi besleyen araştırma alanlarını, gerçek kurumsal kullanım senaryolarıyla birlikte ele alıyoruz.</p>
+        <span class="section-label" data-i18n="story.label"><b>05</b> Hikâyemiz</span>
+        <h2 data-i18n="story.title">Teknolojiyi değil,<br><span class="grad">gerçek ihtiyacı</span> görüyoruz.</h2>
+        <p data-i18n="story.lead">FeyoNova'nın hikâyesi bir fikir toplantısında değil, yıllar boyunca kurumların içinde yaşadığımız gerçek problemlerle başladı.</p>
       </div>
       <div class="agenda-grid">
-        <article class="agenda-card"><span class="tag">01 / Ürün Zekâsı</span><h3>Kurumsal yazılımda karar veren sistemler</h3><p>Yapay zekânın yalnızca yanıt üreten değil, bağlamı anlayıp güvenli aksiyon öneren ürünlere dönüşümü.</p><strong>Karar Sistemleri</strong></article>
-        <article class="agenda-card"><span class="tag">02 / Veri Mimarisi</span><h3>Semantik arama ve veri zekâsı</h3><p>Dağınık kurumsal içeriği doğru bağlamla bulan, ilişkilendiren ve anlamlı hale getiren veri katmanları.</p><strong>Arama ve Erişim</strong></article>
-        <article class="agenda-card"><span class="tag">03 / Sistem Mühendisliği</span><h3>Güvenli ve ölçeklenebilir mimariler</h3><p>Yüksek hacimli iş yüklerinde görünürlük, performans ve güvenliği aynı anda sağlayan sistem tasarımı.</p><strong>Kurumsal Sistemler</strong></article>
+        <article class="agenda-card"><span class="tag" data-i18n="story.1.tag">01 / Sahadan Geliyoruz</span><h3 data-i18n="story.1.title">Gerçek problemlerin içinden geldik</h3><p data-i18n="story.1.desc">Sistemlerin başında bekledik, performans sorunlarını çözdük, kullanıcıları dinledik. İnsanların neye ihtiyaç duyduğunu ve karmaşık görünen bir sürecin nasıl sadeleştirilebileceğini biliyoruz.</p><strong data-i18n="story.1.foot">Saha Deneyimi</strong></article>
+        <article class="agenda-card"><span class="tag" data-i18n="story.2.tag">02 / Organik Zekâ</span><h3 data-i18n="story.2.title">Yapay zekâ tek başına yeterli değildir</h3><p data-i18n="story.2.desc">Asıl değer; saha deneyimi, insan sezgisi, empati ve mühendislik bilgisinin yapay zekâ ile birleştiği noktada ortaya çıkar. İnsanı sistemin dışına çıkarmıyor; aksine onu daha güçlü hâle getiriyoruz.</p><strong data-i18n="story.2.foot">Deneyim + Sezgi + Yapay Zekâ</strong></article>
+        <article class="agenda-card"><span class="tag" data-i18n="story.3.tag">03 / Kurucunun Vizyonu</span><h3 data-i18n="story.3.title">Yıllarca sorunları çözdüm. Şimdi çözümü ürüne dönüştürüyorum.</h3><p data-i18n="story.3.desc">Bir uzmanın deneyimini, yapay zekânın bilgisi ve hızıyla bir araya getirerek aynı anda çok daha fazla insana yardımcı olmak mümkün. Quentra bu düşüncenin ilk büyük ürünü oldu; FeyoNova ise bu hayalin tek ürünle sınırlı kalmaması için doğdu.</p><strong data-i18n="story.3.foot">Ömer Çolakoğlu — Kurucu</strong></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="founder" id="kurucu">
+    <div class="container founder-grid">
+      <div class="founder-photo"><img src="images/omercolakoglu.jpg" alt="Ömer Çolakoğlu"></div>
+      <div class="founder-copy">
+        <span class="section-label" data-i18n="founder.label"><b>06</b> Kurucumuzun Mesajı</span>
+        <h2 data-i18n="founder.title">En iyi ürünler, insanların istediği ürünler değildir.<br><span class="grad">İnsanların kullandıktan sonra onsuz yapamadığı ürünlerdir.</span></h2>
+        <p data-i18n="founder.p1">FeyoNova'yı bu düşünceyle kurduk.</p>
+        <p data-i18n="founder.p2">Amacımız yalnızca yazılım geliştirmek değil; insanların henüz fark etmediği ihtiyaçları öngörerek, uygulanabilir teknolojiyle gerçek problemlere kalıcı çözümler üretmek.</p>
+        <blockquote class="founder-quote" data-i18n="founder.quote">“İnsanların yarın vazgeçemeyeceği şeyi bugün inşa edebilir miyiz?”</blockquote>
+        <p data-i18n="founder.p3">Bugün geliştirdiğimiz her ürün bu soruyla başlıyor. Bu soru, FeyoNova'nın pusulası olmaya devam edecek.</p>
+        <div class="founder-sign"><strong>Ömer Çolakoğlu</strong><span data-i18n="founder.role">Kurucu</span></div>
       </div>
     </div>
   </section>
 
   <section class="cta" id="iletisim">
     <div class="container cta-row">
-      <div><h2>Geleceği birlikte<br>inşa edelim.</h2><p>Yeni fikirler, iş birlikleri ve kurumsal teknoloji projeleri için bizimle iletişime geçin.</p></div>
+      <div><h2 data-i18n="cta.title">İhtiyacınızı sizden önce<br><span class="grad">tespit etmeye çalışıyoruz.</span></h2><p data-i18n="cta.lead">Yeni fikirler, ürün iş birlikleri ve kurumsal teknoloji projeleri için bizimle tanışın.</p></div>
       <a class="btn btn-primary" href="mailto:info@feyonova.com">info@feyonova.com</a>
     </div>
   </section>
@@ -641,12 +890,12 @@ footer a{display:block;margin:9px 0;color:#b8cbd1;font-size:13px}footer a:hover{
 <footer>
   <div class="container">
     <div class="footer-grid">
-      <div><img src="Logolar/FeyoNovaLogo_Small.png" alt="FeyoNova" class="brand-logo-footer"><p class="footer-about">Kurumsal veriyi güvenli, hızlı ve ölçülebilir zekâya dönüştüren yapay zekâ destekli yazılım ürünleri geliştiriyoruz.</p></div>
-      <div><h4>Ürünler</h4><a href="./quentra.html">Quentra</a><a href="./fixbackup.html">FixBackup</a><a href="./questinal.html">Questinal</a><a href="#urunler">Querisma</a></div>
-      <div><h4>FeyoNova</h4><a href="#teknoloji">Teknoloji</a><a href="#yaklasim">Yaklaşımımız</a><a href="#gundem">Odak Alanları</a><a href="#iletisim">İletişim</a></div>
-      <div><h4>İletişim</h4><a href="mailto:info@feyonova.com">info@feyonova.com</a><a href="./quentra.html">Quentra’yı Keşfedin</a></div>
+      <div><img src="Logolar/FeyoNovaLogo_Small.png" alt="FeyoNova" class="brand-logo-footer"><p class="footer-about" data-i18n="footer.about">İnsanların henüz fark etmediği ihtiyaçları, yapay zekâ ve veri teknolojileriyle pratik ve güvenilir ürünlere dönüştürüyoruz.</p></div>
+      <div><h4 data-i18n="footer.products">Ürünler</h4><a href="./quentra.html">Quentra</a><a href="./fixbackup.html">FixBackup</a><a href="#urunler">Querisma</a><a href="./questinal.html">Questinal</a></div>
+      <div><h4>FeyoNova</h4><a href="#teknoloji" data-i18n="nav.build">Nasıl Üretiyoruz</a><a href="#yaklasim" data-i18n="nav.approach">Yaklaşımımız</a><a href="#degerler" data-i18n="nav.values">Değerlerimiz</a><a href="#gundem" data-i18n="nav.story">Hikâyemiz</a><a href="#kurucu" data-i18n="founder.navlink">Kurucumuzun Mesajı</a><a href="#iletisim" data-i18n="nav.contact">İletişim</a></div>
+      <div><h4 data-i18n="footer.contact">İletişim</h4><a href="mailto:info@feyonova.com">info@feyonova.com</a><a href="./quentra.html" data-i18n="footer.quentra">Quentra’yı Keşfedin</a></div>
     </div>
-    <div class="copyright"><span>© 2026 FeyoNova. Tüm hakları saklıdır.</span><span>Yapay zekâ destekli kurumsal yazılım ürünleri.</span></div>
+    <div class="copyright"><span data-i18n="footer.copy">© 2026 FeyoNova. Tüm hakları saklıdır.</span><span>Enterprise Intelligence powered by Organic Intelligence.</span></div>
   </div>
 </footer>
 
@@ -735,6 +984,18 @@ footer a{display:block;margin:9px 0;color:#b8cbd1;font-size:13px}footer a:hover{
 })();
 
 (function(){
+  var tabs=document.querySelectorAll('.product-tab');
+  var panes=document.querySelectorAll('.product-pane');
+  tabs.forEach(function(t){
+    t.addEventListener('click',function(){
+      var id=t.getAttribute('data-product');
+      tabs.forEach(function(x){var on=x===t;x.classList.toggle('active',on);x.setAttribute('aria-selected',on?'true':'false')});
+      panes.forEach(function(p){p.classList.toggle('active',p.getAttribute('data-pane')===id)});
+    });
+  });
+})();
+
+(function(){
   var toggle=document.querySelector('.mobile-toggle');
   var menu=document.getElementById('menu');
   if(!toggle||!menu)return;
@@ -745,6 +1006,7 @@ footer a{display:block;margin:9px 0;color:#b8cbd1;font-size:13px}footer a:hover{
   window.addEventListener('resize',function(){if(window.innerWidth>980)closeMenu()});
 })();
 </script>
+<script src="assets/i18n.js"></script>
 <script src="assets/site-motion.js"></script>
 <script src="assets/page-transition.js"></script>
 </body>
