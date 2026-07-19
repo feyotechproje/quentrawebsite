@@ -487,7 +487,7 @@ section{padding:96px 0;scroll-margin-top:82px}
 .feature-list{list-style:none;display:flex;flex-wrap:wrap;gap:8px 24px;padding:0;margin:16px 0 18px;max-width:72%;color:#332c47;font-size:13px;font-weight:600}
 .feature-list li::before{content:"✓";color:var(--purple);font-weight:800;margin-right:9px}
 .product-icon{display:grid;place-items:center;flex:none;width:48px;height:48px;border-radius:12px;background:var(--teal-pale);color:var(--teal-deep);font-family:var(--mono);font-size:11px;font-weight:700}
-.product-icon img{width:30px;height:30px}.product-icon.questinal{background:#ffe9ea;color:#c5131a}
+.product-icon img{width:30px;height:30px}.product-icon.questinal{position:relative;overflow:hidden;background:#ffe9ea;color:#c5131a}.product-icon.questinal img{position:absolute;left:-13px;top:50%;width:200px;max-width:none;height:auto;transform:translateY(-50%)}
 .product-link{display:inline-flex;align-items:center;gap:8px;padding:8px 0;color:var(--purple);font-family:var(--mono);font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap;border-bottom:1px solid rgba(109,40,217,.28);transition:color .18s ease,border-color .18s ease,gap .18s ease}
 .product-link:hover{color:#4c1d95;border-bottom-color:#4c1d95;gap:12px}
 
@@ -683,7 +683,7 @@ footer a{display:block;margin:9px 0;color:#b8cbd1;font-size:13px}footer a:hover{
         <button type="button" class="product-tab active" data-product="quentra" role="tab" aria-selected="true"><span class="product-icon"><img src="assets/quentra-web/quentra-q.png" alt=""></span><span><span class="pt-name">Quentra</span><span class="pt-sub" data-i18n="tab.quentra">Veritabanı ağ geçidi</span></span></button>
         <button type="button" class="product-tab" data-product="fixbackup" role="tab" aria-selected="false"><span class="product-icon"><img src="assets/fixbackup-web/mark.svg" alt=""></span><span><span class="pt-name">FixBackup</span><span class="pt-sub" data-i18n="tab.fixbackup">Yedekleme otomasyonu</span></span></button>
         <button type="button" class="product-tab" data-product="querisma" role="tab" aria-selected="false"><span class="product-icon">QS</span><span><span class="pt-name">Querisma</span><span class="pt-sub" data-i18n="tab.querisma">Gerçek zamanlı izleme</span></span></button>
-        <button type="button" class="product-tab" data-product="erpai" role="tab" aria-selected="false"><span class="product-icon questinal">QN</span><span><span class="pt-name">Questinal</span><span class="pt-sub" data-i18n="tab.erpai">Veriyle sohbet</span></span></button>
+        <button type="button" class="product-tab" data-product="erpai" role="tab" aria-selected="false"><span class="product-icon questinal"><img src="assets/questinal-web/questinal-logo-clean.png" alt=""></span><span><span class="pt-name">Questinal</span><span class="pt-sub" data-i18n="tab.erpai">Veriyle sohbet</span></span></button>
       </div>
       <div class="product-detail">
         <article class="product-featured product-pane active" data-pane="quentra">
