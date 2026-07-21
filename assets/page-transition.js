@@ -42,7 +42,9 @@
     try{destination=new URL(link.href,window.location.href)}catch(_error){return}
     if(destination.protocol!==window.location.protocol||destination.host!==window.location.host)return;
     if(destination.pathname===window.location.pathname&&destination.search===window.location.search)return;
-    if(!/\.html$/i.test(destination.pathname))return;
+    // Yalnızca sayfa (HTML) gezinmelerinde çalış; .png/.pdf gibi dosya bağlantılarını atla.
+    var lastSegment=destination.pathname.split('/').pop();
+    if(/\.[a-z0-9]{1,6}$/i.test(lastSegment)&&!/\.html$/i.test(lastSegment))return;
 
     event.preventDefault();
     document.body.classList.add('transition-lock');
